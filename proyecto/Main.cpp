@@ -289,8 +289,8 @@ public:
     string getVehiculo();
     string getPlaca();
     void registrar();
-    void LlevarProducto(Empresa e);
-    void LlevarProductoCasa(Cliente c);
+    void llevarProducto(string s);
+    void llevarProductoCasa(string s, string p);
 };
 
 Transporte::Transporte(string name,string cedula,string vehi,string plac,int capa)
@@ -348,11 +348,11 @@ void Transporte::registrar(){
     printf("Transporte registrado con exito\n");
 }
 
-void Transporte::LlevarProducto(Empresa e){
+void Transporte::llevarProducto(string s){
     printf("El cliente, ha comprado el producto\n");
 }
 
-void Transporte::LlevarProductoCasa(Cliente c){
+void Transporte::llevarProductoCasa(string s, string p){
     printf("El cliente se ha afiliado a la empresa\n");
 }
 //FIN CLASE TRANSPORTE
@@ -729,6 +729,7 @@ void llevarpe(Transporte t, list<Empresa> liste){
     }
     
     //Buscar si la empresa existe
+    i=0;
     while(band == false){
         // Buscamos el elemento nombre
         while (it != liste.end()){ 
@@ -765,7 +766,6 @@ void llevarpe(Transporte t, list<Empresa> liste){
         //printf("Empresa seleccionada: %s\n", nombre);
         
         //Buscar la la lista de productos y servicios de la empresa
-        int c=indice1;
         i=0;
         while (it != liste.end() ){ 
             if(i==indice1){
@@ -784,12 +784,15 @@ void llevarpe(Transporte t, list<Empresa> liste){
         
         
         //Buscar si el producto existe
+    i2=0;
     while(band2 == false){
         // Buscamos el elemento nombre
         while (it2 != lista.end()){ 
-            if(it2->getNombre() == nombreP){
+            if(it2->getNombre() != nombreP){
                 band2 = true;
                 indice2=i2;
+            }else{
+                band2 = false;
             }
             i2++;
             it2++;
@@ -797,7 +800,7 @@ void llevarpe(Transporte t, list<Empresa> liste){
         
         if(band2 == false){
             int resp2;
-            printf("la empresa no existe\n");
+            printf("El objeto existe existe\n");
             printf("Desea continuar??\n presion [1] para si y [0] para no. . .\n");
             scanf("%d",&resp2);
             
@@ -806,7 +809,7 @@ void llevarpe(Transporte t, list<Empresa> liste){
                     printf("Entrega de producto finalizado\n");
                     return;
                 } else if(resp2 == 1){
-                    printf("Nombre de la empresa a llevar el producto");
+                    printf("Ingersar el producto a enviar");
                     scanf("%100s", temporal);
                     nombreP = temporal;
                 }else{
@@ -834,7 +837,103 @@ void llevarpe(Transporte t, list<Empresa> liste){
     scanf("%d", &cant);
     
     ProductoServicio p = ProductoServicio(nombreP,des,prec,cod,cant);
+    lista.push_back(p);
+    
+    t.llevarProductoCasa(nombre, nombreP);
+    
 }
+
+
+
+
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------
+//LLEVAR PRODUCTO A LA CASA DE CLIENTE
+void llevarpc(Transporte t, list<Cliente> liste){
+    
+    list<ProductoServicio> lista;
+    // Se obtiene un iterador al inicio de la lista  
+    list<Cliente>::iterator it = liste.begin();
+    bool band=false; bool band2= false;
+    int i, i2; //indice de la empresa, el almacen tien el mismo indice
+    int indice1, indice2;
+   
+    printf("Nombre del cliente a llevar el producto");
+    char temporal[100];
+    scanf("%100s", temporal);
+    string nombre = temporal;
+    
+    //Lista de clientes
+    while (it != liste.end() ){ 
+        cout << it->getNombre() << endl;
+        it++;
+    }
+    
+    //Buscar si la cliente existe
+    while(band == false){
+        // Buscamos el elemento nombre
+        while (it != liste.end()){ 
+            if(it->getNombre() == nombre){
+                band = true;
+                indice1=i;
+            }
+            i++;
+            it++;
+        }
+        
+        if(band == false){
+            int resp;
+            printf("Cliente no existe\n");
+            printf("Desea continuar??\n presion [1] para si y [0] para no. . .\n");
+            scanf("%d",&resp);
+            
+            while(resp!=1 && resp!=0){
+                if(resp == 0){
+                    printf("Entrega de producto finalizado\n");
+                    return;
+                } else if(resp == 1){
+                    printf("Nombre del Cliente a llevar el producto");
+                    scanf("%100s", temporal);
+                    nombre = temporal;
+                }else{
+                    printf("respuesta invalida\n\n");
+                }
+            }
+            
+        }
+    }
+    
+    printf("Ingersar el producto a enviar\n");
+    scanf("%100s", temporal);
+    string nombreP = temporal;
+    
+    printf("Ingersar el producto a enviar\n");
+    scanf("%100s", temporal);
+    string des = temporal;
+    
+    printf("Ingersar el producto a enviar\n");
+    scanf("%100s", temporal);
+    string cod = temporal;
+    
+    printf("Ingersar el producto a enviar\n");
+    int prec;
+    scanf("%d", &prec);
+    
+    printf("Ingersar el producto a enviar\n");
+    int cant;
+    scanf("%d", &cant);
+    
+    ProductoServicio p = ProductoServicio(nombreP,des,prec,cod,cant);
+    
+    t.llevarProductoCasa(nombre, nombreP);
+    
+}
+
 
 
 
