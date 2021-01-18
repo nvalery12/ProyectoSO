@@ -1,65 +1,49 @@
-#include <string>
+//
+// Created by noel on 8/1/21.
+//
 
-using namespace std;
+#include "ProductoServicio.h"
 
-class ProductoServicio
-{
-private:
-    string nombre;
-    string descripcion;
-    int precio;
-    string codigo;
-    int cantidad;
-public:
-    ProductoServicio(string name,string des,int prec,string cod,int cant);
-    void setNombre(string name);
-    void setDescripcion(string des);
-    void setCodigo(string cod);
-    string getNombre();
-    string getDescripcion();
-    string getCodigo();
-    void setPrecio(int prec);
-    void setCantidad(int cant);
-    int getPrecio();
-    int getCantidad();
-};
+ProductoServicio::ProductoServicio(const String &nombre, const String &descripcion, int precio, const String &codigo,
+                                   int cantidad) : nombre(nombre), descripcion(descripcion), precio(precio),
+                                                   codigo(codigo), cantidad(cantidad) {}
 
-ProductoServicio::ProductoServicio(string name,string des,int prec,string cod,int cant)
-{
-    nombre=name;
-    descripcion=des;
-    precio=prec;
-    codigo=cod;
-    cantidad=cant;
-}
-
-void ProductoServicio::setNombre(string name){
-    nombre=name;
-}
-void ProductoServicio::setDescripcion(string des){
-    descripcion=des;
-}
-void ProductoServicio::setCodigo(string Codigof){
-    codigo=Codigof;
-}
-string ProductoServicio::getNombre(){
+const String &ProductoServicio::getNombre() const {
     return nombre;
 }
-string ProductoServicio::getDescripcion(){
+
+void ProductoServicio::setNombre(const String &nombre) {
+    ProductoServicio::nombre = nombre;
+}
+
+const String &ProductoServicio::getDescripcion() const {
     return descripcion;
 }
-string ProductoServicio::getCodigo(){
-    return codigo;
+
+void ProductoServicio::setDescripcion(const String &descripcion) {
+    ProductoServicio::descripcion = descripcion;
 }
-void ProductoServicio::setPrecio(int prec){
-    precio=prec;
-}
-void ProductoServicio::setCantidad(int cant){
-    cantidad=cant;
-}
-int ProductoServicio::getPrecio(){
+
+int ProductoServicio::getPrecio() const {
     return precio;
 }
-int ProductoServicio::getCantidad(){
+
+void ProductoServicio::setPrecio(int precio) {
+    ProductoServicio::precio = precio;
+}
+
+const String &ProductoServicio::getCodigo() const {
+    return codigo;
+}
+
+void ProductoServicio::setCodigo(const String &codigo) {
+    ProductoServicio::codigo = codigo;
+}
+
+int ProductoServicio::getCantidad() const {
     return cantidad;
+}
+
+void ProductoServicio::setCantidad(int cantidad) {
+    ProductoServicio::cantidad = cantidad;
 }

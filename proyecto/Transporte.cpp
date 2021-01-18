@@ -1,65 +1,49 @@
-#include <string>
+//
+// Created by noel on 8/1/21.
+//
 
-using namespace std;
+#include "Transporte.h"
 
-class Transporte
-{
-private:
-    int capacidad;
-    string nombre;
-    string cedulaPropetario;
-    string vehiculo;
-    string placa;
-public:
-    Transporte(string name,string cedula,string vehi,string plac,int capa);
-    void setCapacidad(int cap);
-    int getCapacidad();
-    void setNombre(string name);
-    void setCedula(string cedula);
-    void setVehiculo(string vehi);
-    void setPlaca(string plac);
-    string getNombre();
-    string getCedula();
-    string getVehiculo();
-    string getPlaca();
-};
+Transporte::Transporte(int capacidad, const String &nombre, const String &cedulaPropetario, const String &vehiculo,
+                       const String &placa) : capacidad(capacidad), nombre(nombre), cedulaPropetario(cedulaPropetario),
+                                              vehiculo(vehiculo), placa(placa) {}
 
-Transporte::Transporte(string name,string cedula,string vehi,string plac,int capa)
-{
-    nombre=name;
-    cedulaPropetario=cedula;
-    vehiculo=vehi;
-    placa=plac;
-    capacidad=capa;
-}
-
-void Transporte::setCapacidad(int cap){
-    capacidad=cap;
-}
-int Transporte::getCapacidad(){
+int Transporte::getCapacidad() const {
     return capacidad;
 }
-void Transporte::setNombre(string name){
-    nombre=name;
+
+void Transporte::setCapacidad(int capacidad) {
+    Transporte::capacidad = capacidad;
 }
-void Transporte::setCedula(string cedula){
-    cedulaPropetario=cedula;
-}
-void Transporte::setVehiculo(string vehi){
-    vehiculo=vehi;
-}
-void Transporte::setPlaca(string plac){
-    placa=plac;
-}
-string Transporte::getNombre(){
+
+const String &Transporte::getNombre() const {
     return nombre;
 }
-string Transporte::getCedula(){
+
+void Transporte::setNombre(const String &nombre) {
+    Transporte::nombre = nombre;
+}
+
+const String &Transporte::getCedulaPropetario() const {
     return cedulaPropetario;
 }
-string Transporte::getVehiculo(){
+
+void Transporte::setCedulaPropetario(const String &cedulaPropetario) {
+    Transporte::cedulaPropetario = cedulaPropetario;
+}
+
+const String &Transporte::getVehiculo() const {
     return vehiculo;
 }
-string Transporte::getPlaca(){
+
+void Transporte::setVehiculo(const String &vehiculo) {
+    Transporte::vehiculo = vehiculo;
+}
+
+const String &Transporte::getPlaca() const {
     return placa;
+}
+
+void Transporte::setPlaca(const String &placa) {
+    Transporte::placa = placa;
 }

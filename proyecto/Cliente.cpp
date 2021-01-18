@@ -1,45 +1,32 @@
-#include <string>
+//
+// Created by noel on 8/1/21.
+//
 
-using namespace std;
+#include "Cliente.h"
 
-class Cliente
-{
-private:
-    string nombre;
-    string numTlf;
-    string residencia;
-public:
-    Cliente(string name,string tlf,string resi);
-    void setNombre(string name);
-    void setNumTlf(string des);
-    void setResidencia(string riff);
-    string getNombre();
-    string getNumTlf();
-    string getResidencia();
-};
+Cliente::Cliente(const String &nombre, const String &numTlf, const String &residencia) : nombre(nombre), numTlf(numTlf),
+                                                                                         residencia(residencia) {}
 
-Cliente::Cliente(string name,string tlf,string resi)
-{
-    nombre=name;
-    numTlf=tlf;
-    residencia=resi;
-}
-
-void Cliente::setNombre(string name){
-    nombre=name;
-}
-void Cliente::setNumTlf(string des){
-    numTlf=des;
-}
-void Cliente::setResidencia(string resi){
-    residencia=resi;
-}
-string Cliente::getNombre(){
+const String &Cliente::getNombre() const {
     return nombre;
 }
-string Cliente::getResidencia(){
+
+void Cliente::setNombre(const String &nombre) {
+    Cliente::nombre = nombre;
+}
+
+const String &Cliente::getNumTlf() const {
+    return numTlf;
+}
+
+void Cliente::setNumTlf(const String &numTlf) {
+    Cliente::numTlf = numTlf;
+}
+
+const String &Cliente::getResidencia() const {
     return residencia;
 }
-string Cliente::getNumTlf(){
-    return numTlf;
+
+void Cliente::setResidencia(const String &residencia) {
+    Cliente::residencia = residencia;
 }

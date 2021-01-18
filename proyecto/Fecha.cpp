@@ -1,41 +1,31 @@
-class Fecha
-{
-private:
-    int dia;
-    int mes;
-    int ano;
-public:
-    Fecha(int dia,int mes,int ano);
-    void setDia(int dia);
-    void setMes(int mes);
-    void setAno(int ano);
-    int getDia();
-    int getMes();
-    int getAno();
-};
+//
+// Created by noel on 8/1/21.
+//
 
-Fecha::Fecha(int dia,int mes,int ano)
-{
-    this->dia=dia;
-    this->mes=mes;
-    this->ano=ano;
-}
+#include "Fecha.h"
 
-void Fecha::setDia(int dia){
-    this->dia=dia;
-}
-void Fecha::setMes(int mes){
-    this->mes=mes;
-}
-void Fecha::setAno(int ano){
-    this->ano=ano;
-}
-int Fecha::getDia(){
+Fecha::Fecha(int dia, int mes, int ano) : dia(dia), mes(mes), ano(ano) {}
+
+int Fecha::getDia() const {
     return dia;
 }
-int Fecha::getMes(){
+
+void Fecha::setDia(int dia) {
+    Fecha::dia = dia;
+}
+
+int Fecha::getMes() const {
     return mes;
 }
-int Fecha::getAno(){
+
+void Fecha::setMes(int mes) {
+    Fecha::mes = mes;
+}
+
+int Fecha::getAno() const {
     return ano;
+}
+
+void Fecha::setAno(int ano) {
+    Fecha::ano = ano;
 }

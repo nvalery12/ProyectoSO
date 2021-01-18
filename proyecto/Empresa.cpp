@@ -1,45 +1,61 @@
-#include <string>
+//
+// Created by noel on 8/1/21.
+//
 
-using namespace std;
+#include "Empresa.h"
 
-class Empresa
-{
-private:
-    string nombre;
-    string descripcion;
-    string rif;
-public:
-    Empresa(string nombr,string des,string riff);
-    void setNombre(string name);
-    void setDescripcion(string des);
-    void setRif(string riff);
-    string getNombre();
-    string getDescripcion();
-    string getRif();
-};
+Empresa::Empresa(const string &nombre, const string &descripcion, const string &rif) : nombre(nombre),
+                                                                                       descripcion(descripcion),
+                                                                                       rif(rif) {}
 
-Empresa::Empresa(string nombr,string des,string riff)
-{
-    nombre=nombr;
-    descripcion=des;
-    rif=riff;
+void Empresa::setNombre(const string &nombre) {
+    Empresa::nombre = nombre;
 }
 
-void Empresa::setNombre(string name){
-    nombre=name;
+void Empresa::setDescripcion(const string &descripcion) {
+    Empresa::descripcion = descripcion;
 }
-void Empresa::setDescripcion(string des){
-    descripcion=des;
+
+void Empresa::setRif(const string &rif) {
+    Empresa::rif = rif;
 }
-void Empresa::setRif(string riff){
-    rif=riff;
-}
-string Empresa::getNombre(){
-    return nombre;
-}
-string Empresa::getDescripcion(){
+
+String Empresa::getDescripcion() {
     return descripcion;
 }
-string Empresa::getRif(){
+
+String Empresa::getNombre() {
+    return nombre;
+}
+
+String Empresa::getRif() {
     return rif;
+}
+
+Empresa::Empresa(const String &nombre, const String &descripcion, const String &rif) : nombre(nombre),
+                                                                                       descripcion(descripcion),
+                                                                                       rif(rif) {}
+
+const String &Empresa::getNombre() const {
+    return nombre;
+}
+
+void Empresa::setNombre(const String &nombre) {
+    Empresa::nombre = nombre;
+}
+
+const String &Empresa::getDescripcion() const {
+    return descripcion;
+}
+
+void Empresa::setDescripcion(const String &descripcion) {
+    Empresa::descripcion = descripcion;
+}
+
+const String &Empresa::getRif() const {
+    return rif;
+}
+
+void Empresa::setRif(const String &rif) {
+    Empresa::rif = rif;
 }

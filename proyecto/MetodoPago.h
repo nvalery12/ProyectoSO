@@ -1,4 +1,5 @@
 #include <string>
+#include "Fecha.h"
 
 using namespace std;
 
@@ -30,19 +31,20 @@ class Tarjeta : public MetodoPago
 private:
     string numTarjeta;
     string banco;
+    Fecha fechaVencimiento;
 public:
-    Tarjeta(int cantidad,string numTarjeta,string banco);
+    Tarjeta(int cantidad,string numTarjeta,string banco,Fecha fecha);
     void setNumTarjeta(string numTarjeta);
     void setBanco(string banco);
     string getNumTarjeta();
     string getBanco();
 };
 
-Tarjeta::Tarjeta(int cantidad, string numTarjeta,string banco)
+Tarjeta::Tarjeta(int cantidad, string numTarjeta,string banco,Fecha fecha): MetodoPago(cantidad)
 {
     this->numTarjeta=numTarjeta;
     this->banco=banco;
-    this->cantidad=cantidad;
+    fechaVencimiento(fecha.getDia,fecha.getMes,fecha.getAno);
 }
 
 void Tarjeta::setNumTarjeta(string numTarjeta){
@@ -58,7 +60,7 @@ string Tarjeta::getBanco(){
     return banco;
 }
 
-class Transferencia
+class Transferencia : public MetodoPago
 {
 private:
     string banco;
@@ -66,7 +68,7 @@ private:
     string codigo;
     string correo;
 public:
-    Transferencia(string banco,string rif,string codigo,string correo);
+    Transferencia(int cantidad,string banco,string rif,string codigo,string correo);
     void setBanco(string name);
     void setCodigo(string des);
     void setRif(string riff);
@@ -77,8 +79,12 @@ public:
     string getCorreo();
 };
 
-Transferencia::Transferencia(string banco,string rif,string codigo,string correo)
+Transferencia::Transferencia(int cantidad,string banco,string rif,string codigo,string correo): MetodoPago(cantidad)
 {
+    this->banco=banco;
+    this->rif=rif;
+    this->codigo=codigo;
+    this->correo=correo;
 }
 
 void Transferencia::setBanco(string name){
@@ -112,7 +118,6 @@ public:
     Efectivo(int cantidad);
 };
 
-Efectivo::Efectivo(int cantidad)
+Efectivo::Efectivo(int cantidad): MetodoPago(cantidad)
 {
-    this->cantidad=cantidad;
 }
