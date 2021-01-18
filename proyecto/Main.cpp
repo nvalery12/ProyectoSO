@@ -4,6 +4,9 @@
 
 using namespace std;
 
+
+
+//-------------------------------------------------------------------------------------------------------------------------
 //CLASE PRODUCTOSERVICIO
 class ProductoServicio
 {
@@ -94,6 +97,7 @@ int ProductoServicio::getCantidad(){
 
 
 
+//-------------------------------------------------------------------------------------------------------------------------
 //CLASE EMPRESA
 class Empresa
 {
@@ -188,6 +192,9 @@ void Empresa::quitarProducto(ProductoServicio p, int num){
 
 
 
+
+
+//-------------------------------------------------------------------------------------------------------------------------
 //CLASE CLIENTE
 class Cliente
 {
@@ -265,6 +272,9 @@ void Cliente::afiliarse(Cliente c, Empresa e){
 
 
 
+
+
+//-------------------------------------------------------------------------------------------------------------------------
 //CLASE TRANSPORTE
 
 class Transporte
@@ -366,6 +376,9 @@ void Transporte::llevarProductoCasa(string s, string p){
 
 
 
+
+
+//-------------------------------------------------------------------------------------------------------------------------
 //CLASE METODO PAGO
 
 class MetodoPago
@@ -500,6 +513,8 @@ Efectivo::Efectivo(int cantidad)
 
 
 
+
+//-------------------------------------------------------------------------------------------------------------------------
 //CLASE FECHA
 
 class Fecha
@@ -562,6 +577,7 @@ int Fecha::getAno(){
 
 
 
+//-------------------------------------------------------------------------------------------------------------------------
 //CLASE SOLICITUD
 
 class Solicitud
@@ -646,6 +662,16 @@ string Solicitud::verificarStatus(){
 }
 
 //FIN CLASE SOLICITUD
+
+
+
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------
 //Funcion de registro de Transporte
 void registrarEmpresa(Transporte t){
     string np="";
@@ -670,6 +696,15 @@ void registrarEmpresa(Transporte t){
     t.setCapacidad(cap);
 }
 
+
+
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------
 //Funcion de registro de empresa
 void registrarEmpresa(Empresa e){
     string nombre="";
@@ -686,6 +721,19 @@ void registrarEmpresa(Empresa e){
     e.setRif(rif);
 }
 
+
+
+
+
+
+
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------
 //Funcion de registro de cliente
 void registrarCliente(Cliente c){
     string nombre="";
@@ -701,6 +749,10 @@ void registrarCliente(Cliente c){
     c.setNumTlf(numTlf);
     c.setResidencia(residencia);
 }
+
+
+
+
 
 
 
@@ -859,9 +911,9 @@ void llevarpc(Transporte t, list<Cliente> liste){
     list<ProductoServicio> lista;
     // Se obtiene un iterador al inicio de la lista  
     list<Cliente>::iterator it = liste.begin();
-    bool band=false; bool band2= false;
-    int i, i2; //indice de la empresa, el almacen tien el mismo indice
-    int indice1, indice2;
+    bool band=false;
+    int i=0; //indice de la empresa, el almacen tien el mismo indice
+    int indice1;
    
     printf("Nombre del cliente a llevar el producto");
     char temporal[100];
@@ -881,6 +933,7 @@ void llevarpc(Transporte t, list<Cliente> liste){
             if(it->getNombre() == nombre){
                 band = true;
                 indice1=i;
+                break;
             }
             i++;
             it++;
@@ -934,6 +987,122 @@ void llevarpc(Transporte t, list<Cliente> liste){
     
 }
 
+
+
+
+
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------
+//Funcion de agregar producto del almacen
+Empresa buscarE(list<Empresa> liste){
+    char temporal[100];
+    bool band = false;
+    list<Empresa>::iterator it = liste.begin();
+    
+    printf("Ingersar el producto a enviar\n");
+    scanf("%100s", temporal);
+    string nombre = temporal;
+    
+    //Buscar si la empresa existe
+    while(band == false){
+        // Buscamos el elemento nombre
+        while (it != liste.end()){ 
+            if(it->getNombre() == nombre){
+                return *it;
+            }
+            it++;
+        }
+        
+        if(band == false){
+            printf("Nombre de la empresa a llevar el producto");
+            scanf("%100s", temporal);
+            nombre = temporal;
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------
+//Funcion de agregar producto del almacen
+void agregarP(Empresa e){
+    char temporal[100];
+    
+    printf("Ingersar el producto a enviar\n");
+    scanf("%100s", temporal);
+    string nombreP = temporal;
+    
+    printf("Ingersar el producto a enviar\n");
+    scanf("%100s", temporal);
+    string des = temporal;
+    
+    printf("Ingersar el producto a enviar\n");
+    scanf("%100s", temporal);
+    string cod = temporal;
+    
+    printf("Ingersar el producto a enviar\n");
+    int prec;
+    scanf("%d", &prec);
+    
+    printf("Ingersar el producto a enviar\n");
+    int cant;
+    scanf("%d", &cant);
+    
+    ProductoServicio p = ProductoServicio(nombreP,des,prec,cod,cant);
+    e.getList().push_back(p);
+    
+}
+
+
+
+
+
+
+
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------
+//Funcion de agregar producto del almacen
+void quitarP(Empresa e){
+    char temporal[100];
+    bool band = false;
+    ProductoServicio p;
+    
+    printf("Ingersar el producto a eliminar\n");
+    scanf("%100s", temporal);
+    string nombre = temporal;
+    
+    list<ProductoServicio>::iterator it = e.getList().begin();
+    // Buscamos el elemento nombre
+    while (it != e.getList().end()){ 
+        if(it->getNombre() == nombre){
+            p = *it;
+            band = true;
+            break;
+        }
+        it++;
+    }
+    
+    if(band == true){  
+        printf("ProductoServicio a eliminar");
+        e.getList().erase(p);
+    }else{
+        printf("No existe el producto servicio a eliminar");
+    }
+    return;
+}
 
 
 
