@@ -1,10 +1,13 @@
 file(REMOVE_RECURSE
   "CMakeFiles/proyecto.dir/Cliente.cpp.o"
+  "CMakeFiles/proyecto.dir/Efectivo.cpp.o"
   "CMakeFiles/proyecto.dir/Empresa.cpp.o"
   "CMakeFiles/proyecto.dir/Fecha.cpp.o"
   "CMakeFiles/proyecto.dir/MetodoPago.cpp.o"
   "CMakeFiles/proyecto.dir/ProductoServicio.cpp.o"
   "CMakeFiles/proyecto.dir/Solicitud.cpp.o"
+  "CMakeFiles/proyecto.dir/Tarjeta.cpp.o"
+  "CMakeFiles/proyecto.dir/Transferencia.cpp.o"
   "CMakeFiles/proyecto.dir/Transporte.cpp.o"
   "CMakeFiles/proyecto.dir/main.cpp.o"
   "proyecto"

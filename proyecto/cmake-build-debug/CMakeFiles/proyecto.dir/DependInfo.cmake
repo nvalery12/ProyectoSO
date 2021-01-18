@@ -5,11 +5,14 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/home/noel/Documentos/ProyectoSO/proyecto/Cliente.cpp" "/home/noel/Documentos/ProyectoSO/proyecto/cmake-build-debug/CMakeFiles/proyecto.dir/Cliente.cpp.o"
+  "/home/noel/Documentos/ProyectoSO/proyecto/Efectivo.cpp" "/home/noel/Documentos/ProyectoSO/proyecto/cmake-build-debug/CMakeFiles/proyecto.dir/Efectivo.cpp.o"
   "/home/noel/Documentos/ProyectoSO/proyecto/Empresa.cpp" "/home/noel/Documentos/ProyectoSO/proyecto/cmake-build-debug/CMakeFiles/proyecto.dir/Empresa.cpp.o"
   "/home/noel/Documentos/ProyectoSO/proyecto/Fecha.cpp" "/home/noel/Documentos/ProyectoSO/proyecto/cmake-build-debug/CMakeFiles/proyecto.dir/Fecha.cpp.o"
   "/home/noel/Documentos/ProyectoSO/proyecto/MetodoPago.cpp" "/home/noel/Documentos/ProyectoSO/proyecto/cmake-build-debug/CMakeFiles/proyecto.dir/MetodoPago.cpp.o"
   "/home/noel/Documentos/ProyectoSO/proyecto/ProductoServicio.cpp" "/home/noel/Documentos/ProyectoSO/proyecto/cmake-build-debug/CMakeFiles/proyecto.dir/ProductoServicio.cpp.o"
   "/home/noel/Documentos/ProyectoSO/proyecto/Solicitud.cpp" "/home/noel/Documentos/ProyectoSO/proyecto/cmake-build-debug/CMakeFiles/proyecto.dir/Solicitud.cpp.o"
+  "/home/noel/Documentos/ProyectoSO/proyecto/Tarjeta.cpp" "/home/noel/Documentos/ProyectoSO/proyecto/cmake-build-debug/CMakeFiles/proyecto.dir/Tarjeta.cpp.o"
+  "/home/noel/Documentos/ProyectoSO/proyecto/Transferencia.cpp" "/home/noel/Documentos/ProyectoSO/proyecto/cmake-build-debug/CMakeFiles/proyecto.dir/Transferencia.cpp.o"
   "/home/noel/Documentos/ProyectoSO/proyecto/Transporte.cpp" "/home/noel/Documentos/ProyectoSO/proyecto/cmake-build-debug/CMakeFiles/proyecto.dir/Transporte.cpp.o"
   "/home/noel/Documentos/ProyectoSO/proyecto/main.cpp" "/home/noel/Documentos/ProyectoSO/proyecto/cmake-build-debug/CMakeFiles/proyecto.dir/main.cpp.o"
   )

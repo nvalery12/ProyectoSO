@@ -181,6 +181,45 @@ CMakeFiles/proyecto.dir/Solicitud.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/proyecto.dir/Solicitud.cpp.s"
 	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noel/Documentos/ProyectoSO/proyecto/Solicitud.cpp -o CMakeFiles/proyecto.dir/Solicitud.cpp.s
 
+CMakeFiles/proyecto.dir/Tarjeta.cpp.o: CMakeFiles/proyecto.dir/flags.make
+CMakeFiles/proyecto.dir/Tarjeta.cpp.o: ../Tarjeta.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/noel/Documentos/ProyectoSO/proyecto/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Building CXX object CMakeFiles/proyecto.dir/Tarjeta.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/proyecto.dir/Tarjeta.cpp.o -c /home/noel/Documentos/ProyectoSO/proyecto/Tarjeta.cpp
+
+CMakeFiles/proyecto.dir/Tarjeta.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/proyecto.dir/Tarjeta.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noel/Documentos/ProyectoSO/proyecto/Tarjeta.cpp > CMakeFiles/proyecto.dir/Tarjeta.cpp.i
+
+CMakeFiles/proyecto.dir/Tarjeta.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/proyecto.dir/Tarjeta.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noel/Documentos/ProyectoSO/proyecto/Tarjeta.cpp -o CMakeFiles/proyecto.dir/Tarjeta.cpp.s
+
+CMakeFiles/proyecto.dir/Transferencia.cpp.o: CMakeFiles/proyecto.dir/flags.make
+CMakeFiles/proyecto.dir/Transferencia.cpp.o: ../Transferencia.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/noel/Documentos/ProyectoSO/proyecto/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_10) "Building CXX object CMakeFiles/proyecto.dir/Transferencia.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/proyecto.dir/Transferencia.cpp.o -c /home/noel/Documentos/ProyectoSO/proyecto/Transferencia.cpp
+
+CMakeFiles/proyecto.dir/Transferencia.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/proyecto.dir/Transferencia.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noel/Documentos/ProyectoSO/proyecto/Transferencia.cpp > CMakeFiles/proyecto.dir/Transferencia.cpp.i
+
+CMakeFiles/proyecto.dir/Transferencia.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/proyecto.dir/Transferencia.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noel/Documentos/ProyectoSO/proyecto/Transferencia.cpp -o CMakeFiles/proyecto.dir/Transferencia.cpp.s
+
+CMakeFiles/proyecto.dir/Efectivo.cpp.o: CMakeFiles/proyecto.dir/flags.make
+CMakeFiles/proyecto.dir/Efectivo.cpp.o: ../Efectivo.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/noel/Documentos/ProyectoSO/proyecto/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_11) "Building CXX object CMakeFiles/proyecto.dir/Efectivo.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/proyecto.dir/Efectivo.cpp.o -c /home/noel/Documentos/ProyectoSO/proyecto/Efectivo.cpp
+
+CMakeFiles/proyecto.dir/Efectivo.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/proyecto.dir/Efectivo.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/noel/Documentos/ProyectoSO/proyecto/Efectivo.cpp > CMakeFiles/proyecto.dir/Efectivo.cpp.i
+
+CMakeFiles/proyecto.dir/Efectivo.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/proyecto.dir/Efectivo.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/noel/Documentos/ProyectoSO/proyecto/Efectivo.cpp -o CMakeFiles/proyecto.dir/Efectivo.cpp.s
+
 # Object files for target proyecto
 proyecto_OBJECTS = \
 "CMakeFiles/proyecto.dir/main.cpp.o" \
@@ -190,7 +229,10 @@ proyecto_OBJECTS = \
 "CMakeFiles/proyecto.dir/Transporte.cpp.o" \
 "CMakeFiles/proyecto.dir/Fecha.cpp.o" \
 "CMakeFiles/proyecto.dir/MetodoPago.cpp.o" \
-"CMakeFiles/proyecto.dir/Solicitud.cpp.o"
+"CMakeFiles/proyecto.dir/Solicitud.cpp.o" \
+"CMakeFiles/proyecto.dir/Tarjeta.cpp.o" \
+"CMakeFiles/proyecto.dir/Transferencia.cpp.o" \
+"CMakeFiles/proyecto.dir/Efectivo.cpp.o"
 
 # External object files for target proyecto
 proyecto_EXTERNAL_OBJECTS =
@@ -203,9 +245,12 @@ proyecto: CMakeFiles/proyecto.dir/Transporte.cpp.o
 proyecto: CMakeFiles/proyecto.dir/Fecha.cpp.o
 proyecto: CMakeFiles/proyecto.dir/MetodoPago.cpp.o
 proyecto: CMakeFiles/proyecto.dir/Solicitud.cpp.o
+proyecto: CMakeFiles/proyecto.dir/Tarjeta.cpp.o
+proyecto: CMakeFiles/proyecto.dir/Transferencia.cpp.o
+proyecto: CMakeFiles/proyecto.dir/Efectivo.cpp.o
 proyecto: CMakeFiles/proyecto.dir/build.make
 proyecto: CMakeFiles/proyecto.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/noel/Documentos/ProyectoSO/proyecto/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_9) "Linking CXX executable proyecto"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/noel/Documentos/ProyectoSO/proyecto/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_12) "Linking CXX executable proyecto"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/proyecto.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.

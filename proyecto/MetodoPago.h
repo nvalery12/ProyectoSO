@@ -5,10 +5,11 @@
 #ifndef PROYECTO_METODOPAGO_H
 #define PROYECTO_METODOPAGO_H
 #include <iostream>
+#include <string>
 
 using namespace std;
 class MetodoPago {
-private:
+protected:
     int cantidad;
 public:
     MetodoPago();

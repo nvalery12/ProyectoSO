@@ -170,6 +170,33 @@ Cliente.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/proyecto.dir/build.make CMakeFiles/proyecto.dir/Cliente.cpp.s
 .PHONY : Cliente.cpp.s
 
+Efectivo.o: Efectivo.cpp.o
+
+.PHONY : Efectivo.o
+
+# target to build an object file
+Efectivo.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/proyecto.dir/build.make CMakeFiles/proyecto.dir/Efectivo.cpp.o
+.PHONY : Efectivo.cpp.o
+
+Efectivo.i: Efectivo.cpp.i
+
+.PHONY : Efectivo.i
+
+# target to preprocess a source file
+Efectivo.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/proyecto.dir/build.make CMakeFiles/proyecto.dir/Efectivo.cpp.i
+.PHONY : Efectivo.cpp.i
+
+Efectivo.s: Efectivo.cpp.s
+
+.PHONY : Efectivo.s
+
+# target to generate assembly for a file
+Efectivo.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/proyecto.dir/build.make CMakeFiles/proyecto.dir/Efectivo.cpp.s
+.PHONY : Efectivo.cpp.s
+
 Empresa.o: Empresa.cpp.o
 
 .PHONY : Empresa.o
@@ -305,6 +332,60 @@ Solicitud.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/proyecto.dir/build.make CMakeFiles/proyecto.dir/Solicitud.cpp.s
 .PHONY : Solicitud.cpp.s
 
+Tarjeta.o: Tarjeta.cpp.o
+
+.PHONY : Tarjeta.o
+
+# target to build an object file
+Tarjeta.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/proyecto.dir/build.make CMakeFiles/proyecto.dir/Tarjeta.cpp.o
+.PHONY : Tarjeta.cpp.o
+
+Tarjeta.i: Tarjeta.cpp.i
+
+.PHONY : Tarjeta.i
+
+# target to preprocess a source file
+Tarjeta.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/proyecto.dir/build.make CMakeFiles/proyecto.dir/Tarjeta.cpp.i
+.PHONY : Tarjeta.cpp.i
+
+Tarjeta.s: Tarjeta.cpp.s
+
+.PHONY : Tarjeta.s
+
+# target to generate assembly for a file
+Tarjeta.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/proyecto.dir/build.make CMakeFiles/proyecto.dir/Tarjeta.cpp.s
+.PHONY : Tarjeta.cpp.s
+
+Transferencia.o: Transferencia.cpp.o
+
+.PHONY : Transferencia.o
+
+# target to build an object file
+Transferencia.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/proyecto.dir/build.make CMakeFiles/proyecto.dir/Transferencia.cpp.o
+.PHONY : Transferencia.cpp.o
+
+Transferencia.i: Transferencia.cpp.i
+
+.PHONY : Transferencia.i
+
+# target to preprocess a source file
+Transferencia.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/proyecto.dir/build.make CMakeFiles/proyecto.dir/Transferencia.cpp.i
+.PHONY : Transferencia.cpp.i
+
+Transferencia.s: Transferencia.cpp.s
+
+.PHONY : Transferencia.s
+
+# target to generate assembly for a file
+Transferencia.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/proyecto.dir/build.make CMakeFiles/proyecto.dir/Transferencia.cpp.s
+.PHONY : Transferencia.cpp.s
+
 Transporte.o: Transporte.cpp.o
 
 .PHONY : Transporte.o
@@ -371,6 +452,9 @@ help:
 	@echo "... Cliente.o"
 	@echo "... Cliente.i"
 	@echo "... Cliente.s"
+	@echo "... Efectivo.o"
+	@echo "... Efectivo.i"
+	@echo "... Efectivo.s"
 	@echo "... Empresa.o"
 	@echo "... Empresa.i"
 	@echo "... Empresa.s"
@@ -386,6 +470,12 @@ help:
 	@echo "... Solicitud.o"
 	@echo "... Solicitud.i"
 	@echo "... Solicitud.s"
+	@echo "... Tarjeta.o"
+	@echo "... Tarjeta.i"
+	@echo "... Tarjeta.s"
+	@echo "... Transferencia.o"
+	@echo "... Transferencia.i"
+	@echo "... Transferencia.s"
 	@echo "... Transporte.o"
 	@echo "... Transporte.i"
 	@echo "... Transporte.s"

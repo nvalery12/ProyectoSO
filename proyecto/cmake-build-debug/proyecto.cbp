@@ -88,6 +88,12 @@
 		<Unit filename="/home/noel/Documentos/ProyectoSO/proyecto/Cliente.h">
 			<Option target="proyecto"/>
 		</Unit>
+		<Unit filename="/home/noel/Documentos/ProyectoSO/proyecto/Efectivo.cpp">
+			<Option target="proyecto"/>
+		</Unit>
+		<Unit filename="/home/noel/Documentos/ProyectoSO/proyecto/Efectivo.h">
+			<Option target="proyecto"/>
+		</Unit>
 		<Unit filename="/home/noel/Documentos/ProyectoSO/proyecto/Empresa.cpp">
 			<Option target="proyecto"/>
 		</Unit>
@@ -116,6 +122,18 @@
 			<Option target="proyecto"/>
 		</Unit>
 		<Unit filename="/home/noel/Documentos/ProyectoSO/proyecto/Solicitud.h">
+			<Option target="proyecto"/>
+		</Unit>
+		<Unit filename="/home/noel/Documentos/ProyectoSO/proyecto/Tarjeta.cpp">
+			<Option target="proyecto"/>
+		</Unit>
+		<Unit filename="/home/noel/Documentos/ProyectoSO/proyecto/Tarjeta.h">
+			<Option target="proyecto"/>
+		</Unit>
+		<Unit filename="/home/noel/Documentos/ProyectoSO/proyecto/Transferencia.cpp">
+			<Option target="proyecto"/>
+		</Unit>
+		<Unit filename="/home/noel/Documentos/ProyectoSO/proyecto/Transferencia.h">
 			<Option target="proyecto"/>
 		</Unit>
 		<Unit filename="/home/noel/Documentos/ProyectoSO/proyecto/Transporte.cpp">
