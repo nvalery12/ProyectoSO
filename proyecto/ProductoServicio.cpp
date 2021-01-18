@@ -1,7 +1,3 @@
-#include <string>
-
-using namespace std;
-
 class ProductoServicio
 {
 private:
@@ -12,6 +8,7 @@ private:
     int cantidad;
 public:
     ProductoServicio(string name,string des,int prec,string cod,int cant);
+    ProductoServicio();
     void setNombre(string name);
     void setDescripcion(string des);
     void setCodigo(string cod);
@@ -24,13 +21,21 @@ public:
     int getCantidad();
 };
 
-ProductoServicio::ProductoServicio(string name,string des,int prec,string cod,int cant)
+ProductoServicio::ProductoServicio(string name,string des,int prec,string cod,int cant) //Constructor con parametros
 {
     nombre=name;
     descripcion=des;
     precio=prec;
     codigo=cod;
     cantidad=cant;
+}
+
+ProductoServicio::ProductoServicio(){ //Constructor sin parametros
+    nombre="";
+    descripcion="";
+    precio=0;
+    codigo="";
+    cantidad=0;
 }
 
 void ProductoServicio::setNombre(string name){

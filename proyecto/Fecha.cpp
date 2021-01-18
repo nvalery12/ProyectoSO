@@ -5,30 +5,38 @@ private:
     int mes;
     int ano;
 public:
-    Fecha(int dia,int mes,int ano);
-    void setDia(int dia);
-    void setMes(int mes);
-    void setAno(int ano);
+    Fecha(int d,int m,int a);
+    Fecha();
+    void setDia(int d);
+    void setMes(int m);
+    void setAno(int a);
     int getDia();
     int getMes();
     int getAno();
 };
 
-Fecha::Fecha(int dia,int mes,int ano)
+Fecha::Fecha(int d,int m,int a)
 {
-    this->dia=dia;
-    this->mes=mes;
-    this->ano=ano;
+    dia=d;
+    mes=m;
+    ano=a;
 }
 
-void Fecha::setDia(int dia){
-    this->dia=dia;
+Fecha::Fecha()
+{
+    dia=0;
+    mes=0;
+    ano=0;
 }
-void Fecha::setMes(int mes){
-    this->mes=mes;
+
+void Fecha::setDia(int d){
+    dia=d;
 }
-void Fecha::setAno(int ano){
-    this->ano=ano;
+void Fecha::setMes(int m){
+    mes=m;
+}
+void Fecha::setAno(int a){
+    ano=a;
 }
 int Fecha::getDia(){
     return dia;

@@ -1,7 +1,3 @@
-#include <string>
-
-using namespace std;
-
 class Transporte
 {
 private:
@@ -12,6 +8,7 @@ private:
     string placa;
 public:
     Transporte(string name,string cedula,string vehi,string plac,int capa);
+    Transporte();
     void setCapacidad(int cap);
     int getCapacidad();
     void setNombre(string name);
@@ -22,6 +19,9 @@ public:
     string getCedula();
     string getVehiculo();
     string getPlaca();
+    void registrar();
+    void LlevarProducto(Empresa e);
+    void LlevarProductoCasa(Cliente c);
 };
 
 Transporte::Transporte(string name,string cedula,string vehi,string plac,int capa)
@@ -31,6 +31,15 @@ Transporte::Transporte(string name,string cedula,string vehi,string plac,int cap
     vehiculo=vehi;
     placa=plac;
     capacidad=capa;
+}
+
+Transporte::Transporte()
+{
+    nombre="";
+    cedulaPropetario="";
+    vehiculo="";
+    placa="";
+    capacidad=0;
 }
 
 void Transporte::setCapacidad(int cap){
@@ -62,4 +71,18 @@ string Transporte::getVehiculo(){
 }
 string Transporte::getPlaca(){
     return placa;
+}
+
+//PROCESOS
+
+void Transporte::registrar(){
+    printf("Transporte registrado con exito\n");
+}
+
+void Transporte::LlevarProducto(Empresa e){
+    printf("El cliente, ha comprado el producto\n");
+}
+
+void Transporte::LlevarProductoCasa(Cliente c){
+    printf("El cliente se ha afiliado a la empresa\n");
 }

@@ -1,24 +1,26 @@
-#include <string>
-
-using namespace std;
-
 class MetodoPago
 {
 protected:
     int cantidad;
 public:
     MetodoPago(int cant);
+    MetodoPago();
     void setCantidad(int cantidad);
     int getCantidad();
 };
 
 MetodoPago::MetodoPago(int cant)
 {
-    this->cantidad=cant;
+    cantidad=cant;
 }
 
-void MetodoPago::setCantidad(int cantidad){
-    this->cantidad=cantidad;
+MetodoPago::MetodoPago()
+{
+    cantidad=0;
+}
+
+void MetodoPago::setCantidad(int cant){
+    cantidad=cant;
 }
 
 int MetodoPago::getCantidad(){
