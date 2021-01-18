@@ -1,26 +1,26 @@
 //
-// Created by noel on 8/1/21.
+// Created by noel on 18/1/21.
 //
 
 #include "ProductoServicio.h"
 
-ProductoServicio::ProductoServicio(const String &nombre, const String &descripcion, int precio, const String &codigo,
+ProductoServicio::ProductoServicio(const string &nombre, const string &descripcion, int precio, const string &codigo,
                                    int cantidad) : nombre(nombre), descripcion(descripcion), precio(precio),
                                                    codigo(codigo), cantidad(cantidad) {}
 
-const String &ProductoServicio::getNombre() const {
+const string &ProductoServicio::getNombre() const {
     return nombre;
 }
 
-void ProductoServicio::setNombre(const String &nombre) {
+void ProductoServicio::setNombre(const string &nombre) {
     ProductoServicio::nombre = nombre;
 }
 
-const String &ProductoServicio::getDescripcion() const {
+const string &ProductoServicio::getDescripcion() const {
     return descripcion;
 }
 
-void ProductoServicio::setDescripcion(const String &descripcion) {
+void ProductoServicio::setDescripcion(const string &descripcion) {
     ProductoServicio::descripcion = descripcion;
 }
 
@@ -32,11 +32,11 @@ void ProductoServicio::setPrecio(int precio) {
     ProductoServicio::precio = precio;
 }
 
-const String &ProductoServicio::getCodigo() const {
+const string &ProductoServicio::getCodigo() const {
     return codigo;
 }
 
-void ProductoServicio::setCodigo(const String &codigo) {
+void ProductoServicio::setCodigo(const string &codigo) {
     ProductoServicio::codigo = codigo;
 }
 
@@ -46,4 +46,12 @@ int ProductoServicio::getCantidad() const {
 
 void ProductoServicio::setCantidad(int cantidad) {
     ProductoServicio::cantidad = cantidad;
+}
+
+ProductoServicio::ProductoServicio() {
+    nombre="";
+    descripcion="";
+    precio=0;
+    codigo="";
+    cantidad=0;
 }

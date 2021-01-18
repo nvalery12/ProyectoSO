@@ -1,47 +1,57 @@
 //
-// Created by noel on 8/1/21.
+// Created by noel on 18/1/21.
 //
 
-#ifndef PROYECTOSO_SOLICITUD_H
-#define PROYECTOSO_SOLICITUD_H
-
+#ifndef PROYECTO_SOLICITUD_H
+#define PROYECTO_SOLICITUD_H
+#include <iostream>
+#include <string>
 #include "ProductoServicio.h"
-#include "Cliente.h"
-#include "Empresa.h"
+#include "MetodoPago.h"
+#include "Transporte.h"
 #include "Fecha.h"
-#include <String.h>
+#include "Cliente.h"
 
 class Solicitud {
 private:
-    ProductoServicio product;
-    Cliente client;
-    Empresa prov;
+    ProductoServicio producto;
+    MetodoPago metodo;
+    Transporte transporte;
     Fecha entrega;
-    String status;
+    string status;
+    Cliente cliente;
 public:
-    Solicitud(const ProductoServicio &product, const Cliente &client, const Empresa &prov, const Fecha &entrega,
-              const String &status);
+    Solicitud();
 
-    const ProductoServicio &getProduct() const;
+    Solicitud(const ProductoServicio &producto, const MetodoPago &metodo, const Transporte &transporte,
+              const Fecha &entrega, const string &status, const Cliente &cliente);
 
-    void setProduct(const ProductoServicio &product);
+    const ProductoServicio &getProducto() const;
 
-    const Cliente &getClient() const;
+    void setProducto(const ProductoServicio &producto);
 
-    void setClient(const Cliente &client);
+    const MetodoPago &getMetodo() const;
 
-    const Empresa &getProv() const;
+    void setMetodo(const MetodoPago &metodo);
 
-    void setProv(const Empresa &prov);
+    const Transporte &getTransporte() const;
+
+    void setTransporte(const Transporte &transporte);
 
     const Fecha &getEntrega() const;
 
     void setEntrega(const Fecha &entrega);
 
-    const String &getStatus() const;
+    const string &getStatus() const;
 
-    void setStatus(const String &status);
+    void setStatus(const string &status);
+
+    const Cliente &getCliente() const;
+
+    void setCliente(const Cliente &cliente);
+
+    string verificarStatus();
 };
 
 
-#endif //PROYECTOSO_SOLICITUD_H
+#endif //PROYECTO_SOLICITUD_H

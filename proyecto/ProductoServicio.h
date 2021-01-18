@@ -1,38 +1,40 @@
 //
-// Created by noel on 8/1/21.
+// Created by noel on 18/1/21.
 //
 
-#ifndef PROYECTOSO_PRODUCTOSERVICIO_H
-#define PROYECTOSO_PRODUCTOSERVICIO_H
-
-#include <String.h>
+#ifndef PROYECTO_PRODUCTOSERVICIO_H
+#define PROYECTO_PRODUCTOSERVICIO_H
+#include <iostream>
+#include <string>
 
 using namespace std;
 class ProductoServicio {
 private:
-    String nombre;
-    String descripcion;
+    string nombre;
+    string descripcion;
     int precio;
-    String codigo;
+    string codigo;
     int cantidad;
 public:
-    ProductoServicio(const String &nombre, const String &descripcion, int precio, const String &codigo, int cantidad);
+    ProductoServicio(const string &nombre, const string &descripcion, int precio, const string &codigo, int cantidad);
 
-    const String &getNombre() const;
+    ProductoServicio();
 
-    void setNombre(const String &nombre);
+    const string &getNombre() const;
 
-    const String &getDescripcion() const;
+    void setNombre(const string &nombre);
 
-    void setDescripcion(const String &descripcion);
+    const string &getDescripcion() const;
+
+    void setDescripcion(const string &descripcion);
 
     int getPrecio() const;
 
     void setPrecio(int precio);
 
-    const String &getCodigo() const;
+    const string &getCodigo() const;
 
-    void setCodigo(const String &codigo);
+    void setCodigo(const string &codigo);
 
     int getCantidad() const;
 
@@ -40,4 +42,4 @@ public:
 };
 
 
-#endif //PROYECTOSO_PRODUCTOSERVICIO_H
+#endif //PROYECTO_PRODUCTOSERVICIO_H

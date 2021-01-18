@@ -1,15 +1,22 @@
 //
-// Created by noel on 8/1/21.
+// Created by noel on 18/1/21.
 //
 
-#ifndef PROYECTOSO_FECHA_H
-#define PROYECTOSO_FECHA_H
+#ifndef PROYECTO_FECHA_H
+#define PROYECTO_FECHA_H
+#include <iostream>
 
+using namespace std;
 
-class Fecha
-{
+class Fecha {
+private:
+    int dia;
+    int mes;
+    int ano;
 public:
     Fecha(int dia, int mes, int ano);
+
+    Fecha();
 
     int getDia() const;
 
@@ -22,12 +29,7 @@ public:
     int getAno() const;
 
     void setAno(int ano);
-
-private:
-    int dia;
-    int mes;
-    int ano;
 };
 
 
-#endif //PROYECTOSO_FECHA_H
+#endif //PROYECTO_FECHA_H

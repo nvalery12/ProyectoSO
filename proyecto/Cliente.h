@@ -1,33 +1,40 @@
 //
-// Created by noel on 8/1/21.
+// Created by noel on 18/1/21.
 //
 
-#ifndef PROYECTOSO_CLIENTE_H
-#define PROYECTOSO_CLIENTE_H
-#include <String.h>
+#ifndef PROYECTO_CLIENTE_H
+#define PROYECTO_CLIENTE_H
+#include <iostream>
+#include <string>
 
 using namespace std;
-class Cliente
-{
+
+class Cliente {
 private:
-    String nombre;
-    String numTlf;
-    String residencia;
+    string nombre;
+    string numTlf;
+    string residencia;
 public:
-    Cliente(const String &nombre, const String &numTlf, const String &residencia);
+    Cliente();
 
-    const String &getNombre() const;
+    Cliente(const string &nombre, const string &numTlf, const string &residencia);
 
-    void setNombre(const String &nombre);
+    const string &getNombre() const;
 
-    const String &getNumTlf() const;
+    void setNombre(const string &nombre);
 
-    void setNumTlf(const String &numTlf);
+    const string &getNumTlf() const;
 
-    const String &getResidencia() const;
+    void setNumTlf(const string &numTlf);
 
-    void setResidencia(const String &residencia);
+    const string &getResidencia() const;
+
+    void setResidencia(const string &residencia);
+
+    bool comprar();
+
+    bool afiliarse();
 };
 
 
-#endif //PROYECTOSO_CLIENTE_H
+#endif //PROYECTO_CLIENTE_H

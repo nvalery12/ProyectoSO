@@ -1,8 +1,14 @@
 //
-// Created by noel on 8/1/21.
+// Created by noel on 18/1/21.
 //
 
 #include "Fecha.h"
+
+Fecha::Fecha() {
+    dia=0;
+    mes=0;
+    ano=0;
+}
 
 Fecha::Fecha(int dia, int mes, int ano) : dia(dia), mes(mes), ano(ano) {}
 

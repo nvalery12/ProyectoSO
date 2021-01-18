@@ -1,35 +1,47 @@
 //
-// Created by noel on 8/1/21.
+// Created by noel on 18/1/21.
 //
 
 #include "Solicitud.h"
 
-Solicitud::Solicitud(const ProductoServicio &product, const Cliente &client, const Empresa &prov, const Fecha &entrega,
-                     const String &status) : product(product), client(client), prov(prov), entrega(entrega),
-                                             status(status) {}
-
-const ProductoServicio &Solicitud::getProduct() const {
-    return product;
+Solicitud::Solicitud() {
+    producto=ProductoServicio();
+    metodo=MetodoPago();
+    transporte=Transporte();
+    cliente=Cliente();
+    status="";
 }
 
-void Solicitud::setProduct(const ProductoServicio &product) {
-    Solicitud::product = product;
+Solicitud::Solicitud(const ProductoServicio &producto, const MetodoPago &metodo, const Transporte &transporte,
+                     const Fecha &entrega, const string &status, const Cliente &cliente) : producto(producto),
+                                                                                           metodo(metodo),
+                                                                                           transporte(transporte),
+                                                                                           entrega(entrega),
+                                                                                           status(status),
+                                                                                           cliente(cliente) {}
+
+const ProductoServicio &Solicitud::getProducto() const {
+    return producto;
 }
 
-const Cliente &Solicitud::getClient() const {
-    return client;
+void Solicitud::setProducto(const ProductoServicio &producto) {
+    Solicitud::producto = producto;
 }
 
-void Solicitud::setClient(const Cliente &client) {
-    Solicitud::client = client;
+const MetodoPago &Solicitud::getMetodo() const {
+    return metodo;
 }
 
-const Empresa &Solicitud::getProv() const {
-    return prov;
+void Solicitud::setMetodo(const MetodoPago &metodo) {
+    Solicitud::metodo = metodo;
 }
 
-void Solicitud::setProv(const Empresa &prov) {
-    Solicitud::prov = prov;
+const Transporte &Solicitud::getTransporte() const {
+    return transporte;
+}
+
+void Solicitud::setTransporte(const Transporte &transporte) {
+    Solicitud::transporte = transporte;
 }
 
 const Fecha &Solicitud::getEntrega() const {
@@ -40,10 +52,23 @@ void Solicitud::setEntrega(const Fecha &entrega) {
     Solicitud::entrega = entrega;
 }
 
-const String &Solicitud::getStatus() const {
+const string &Solicitud::getStatus() const {
     return status;
 }
 
-void Solicitud::setStatus(const String &status) {
+void Solicitud::setStatus(const string &status) {
     Solicitud::status = status;
+}
+
+const Cliente &Solicitud::getCliente() const {
+    return cliente;
+}
+
+void Solicitud::setCliente(const Cliente &cliente) {
+    Solicitud::cliente = cliente;
+}
+
+string Solicitud::verificarStatus(){
+    printf("Verificacion realizada con exito\n");
+    return "SIIIIIUUUU";
 }

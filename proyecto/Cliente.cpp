@@ -1,32 +1,38 @@
 //
-// Created by noel on 8/1/21.
+// Created by noel on 18/1/21.
 //
 
 #include "Cliente.h"
 
-Cliente::Cliente(const String &nombre, const String &numTlf, const String &residencia) : nombre(nombre), numTlf(numTlf),
+Cliente::Cliente(const string &nombre, const string &numTlf, const string &residencia) : nombre(nombre), numTlf(numTlf),
                                                                                          residencia(residencia) {}
 
-const String &Cliente::getNombre() const {
+Cliente::Cliente() {
+    nombre="";
+    numTlf="";
+    residencia="";
+}
+
+const string &Cliente::getNombre() const {
     return nombre;
 }
 
-void Cliente::setNombre(const String &nombre) {
+void Cliente::setNombre(const string &nombre) {
     Cliente::nombre = nombre;
 }
 
-const String &Cliente::getNumTlf() const {
+const string &Cliente::getNumTlf() const {
     return numTlf;
 }
 
-void Cliente::setNumTlf(const String &numTlf) {
+void Cliente::setNumTlf(const string &numTlf) {
     Cliente::numTlf = numTlf;
 }
 
-const String &Cliente::getResidencia() const {
+const string &Cliente::getResidencia() const {
     return residencia;
 }
 
-void Cliente::setResidencia(const String &residencia) {
+void Cliente::setResidencia(const string &residencia) {
     Cliente::residencia = residencia;
 }

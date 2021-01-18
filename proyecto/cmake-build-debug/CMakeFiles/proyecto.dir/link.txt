@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/proyecto.dir/main.cpp.o CMakeFiles/proyecto.dir/ProductoServicio.cpp.o CMakeFiles/proyecto.dir/Cliente.cpp.o CMakeFiles/proyecto.dir/Empresa.cpp.o CMakeFiles/proyecto.dir/Transporte.cpp.o CMakeFiles/proyecto.dir/Fecha.cpp.o CMakeFiles/proyecto.dir/MetodoPago.cpp.o CMakeFiles/proyecto.dir/Solicitud.cpp.o  -o proyecto 

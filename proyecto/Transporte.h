@@ -1,42 +1,55 @@
 //
-// Created by noel on 8/1/21.
+// Created by noel on 18/1/21.
 //
 
-#ifndef PROYECTOSO_TRANSPORTE_H
-#define PROYECTOSO_TRANSPORTE_H
-#include <String.h>
+#ifndef PROYECTO_TRANSPORTE_H
+#define PROYECTO_TRANSPORTE_H
+#include <iostream>
+#include <string>
+#include "Cliente.h"
+#include "Empresa.h"
+
 using namespace std;
+
 class Transporte {
 private:
     int capacidad;
-    String nombre;
-    String cedulaPropetario;
-    String vehiculo;
-    String placa;
+    string nombre;
+    string cedulaPropetario;
+    string vehiculo;
+    string placa;
 public:
-    Transporte(int capacidad, const String &nombre, const String &cedulaPropetario, const String &vehiculo,
-               const String &placa);
+    Transporte();
+
+    Transporte(int capacidad, const string &nombre, const string &cedulaPropetario, const string &vehiculo,
+               const string &placa);
 
     int getCapacidad() const;
 
     void setCapacidad(int capacidad);
 
-    const String &getNombre() const;
+    const string &getNombre() const;
 
-    void setNombre(const String &nombre);
+    void setNombre(const string &nombre);
 
-    const String &getCedulaPropetario() const;
+    const string &getCedulaPropetario() const;
 
-    void setCedulaPropetario(const String &cedulaPropetario);
+    void setCedulaPropetario(const string &cedulaPropetario);
 
-    const String &getVehiculo() const;
+    const string &getVehiculo() const;
 
-    void setVehiculo(const String &vehiculo);
+    void setVehiculo(const string &vehiculo);
 
-    const String &getPlaca() const;
+    const string &getPlaca() const;
 
-    void setPlaca(const String &placa);
+    void setPlaca(const string &placa);
+
+    void registrar();
+
+    void LlevarProducto(Empresa e);
+
+    void LlevarProductoCasa(Cliente c);
 };
 
 
-#endif //PROYECTOSO_TRANSPORTE_H
+#endif //PROYECTO_TRANSPORTE_H

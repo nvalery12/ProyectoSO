@@ -1,36 +1,49 @@
 //
-// Created by noel on 8/1/21.
+// Created by noel on 18/1/21.
 //
 
-#ifndef PROYECTOSO_EMPRESA_H
-#define PROYECTOSO_EMPRESA_H
-#include <string.h>
-
+#ifndef PROYECTO_EMPRESA_H
+#define PROYECTO_EMPRESA_H
+#include <iostream>
 #include <string>
+#include <list>
+#include "ProductoServicio.h"
 
 using namespace std;
 
-class Empresa
-{
+class Empresa {
 private:
-    String nombre;
-    String descripcion;
-    String rif;
+    string nombre;
+    string descripcion;
+    string rif;
+    list<ProductoServicio> listp;
 public:
-    Empresa(const String &nombre, const String &descripcion, const String &rif);
+    Empresa();
 
-    const String &getNombre() const;
+    Empresa(const string &nombre, const string &descripcion, const list<ProductoServicio> &listp);
 
-    void setNombre(const String &nombre);
+    const string &getNombre() const;
 
-    const String &getDescripcion() const;
+    void setNombre(const string &nombre);
 
-    void setDescripcion(const String &descripcion);
+    const string &getDescripcion() const;
 
-    const String &getRif() const;
+    void setDescripcion(const string &descripcion);
 
-    void setRif(const String &rif);
+    const list<ProductoServicio> &getListp() const;
+
+    void setListp(const list<ProductoServicio> &listp);
+
+    void rellenarStock();
+
+    void anadirProducto(ProductoServicio p, int num);
+
+    void quitarProducto(ProductoServicio p,int num);
+
+    const string &getRif() const;
+
+    void setRif(const string &rif);
 };
 
 
-#endif //PROYECTOSO_EMPRESA_H
+#endif //PROYECTO_EMPRESA_H
