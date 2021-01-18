@@ -1,4 +1,6 @@
 #include <iostream>
+#include <stdlib.h>
+#include <list>
 
 using namespace std;
 
@@ -86,65 +88,6 @@ int ProductoServicio::getCantidad(){
 
 
 
-//CLASE ALMACENPROPIO
-class AlmacenPropio
-{
-private:
-    ProductoServicio producto;
-    int num_producto;
-public:
-    AlmacenPropio(ProductoServicio p,int num);
-    AlmacenPropio();
-    void setProducto(ProductoServicio p);
-    void setNum_producto(int num);
-    ProductoServicio getProducto();
-    int getNum_producto();
-    void añadirProducto(ProductoServicio p, int num);
-    void quitarProducto(ProductoServicio p, int num);
-};
-
-AlmacenPropio::AlmacenPropio(ProductoServicio p,int num) ////Constructron sin parametros
-{
-    producto=p;
-    num_producto=num;
-}
-
-AlmacenPropio::AlmacenPropio() //Constructron con parametros
-{
-    producto=ProductoServicio();
-    num_producto=0;
-}
-
-void AlmacenPropio::setProducto(ProductoServicio p){
-    producto=p;
-}
-void AlmacenPropio::setNum_producto(int num){
-    num_producto=num;
-}
-
-ProductoServicio AlmacenPropio::getProducto(){
-    return producto;
-}
-int AlmacenPropio::getNum_producto(){
-    return num_producto;
-}
-
-//Procesos
-
-void AlmacenPropio::añadirProducto(ProductoServicio p, int num){
-    printf("producto añadido con exito\n");
-}
-
-void AlmacenPropio::quitarProducto(ProductoServicio p, int num){
-    printf("producto quitado con exito\n");
-}
-
-//FIN CLASE ALMACENPROPIO
-
-
-
-
-
 
 
 
@@ -158,32 +101,39 @@ private:
     string nombre;
     string descripcion;
     string rif;
+    list<ProductoServicio> listp;
 public:
-    Empresa(string nombr,string des,string riff);
-    Empresa();
+    Empresa(string nombr,string des,string riff, list<ProductoServicio> l);
+    //Empresa();
     void setNombre(string name);
     void setDescripcion(string des);
     void setRif(string riff);
+    void setListp(list<ProductoServicio> listp);
     string getNombre();
     string getDescripcion();
     string getRif();
+    list<ProductoServicio> getList();
     void registrar();
     void rellenarStock();
+    void añadirProducto(ProductoServicio p, int num);
+    void quitarProducto(ProductoServicio p, int num);
 };
 
-Empresa::Empresa(string nombr,string des,string riff) ////Constructron sin parametros
+Empresa::Empresa(string nombr,string des,string riff, list<ProductoServicio> l) ////Constructron sin parametros
 {
     nombre=nombr;
     descripcion=des;
     rif=riff;
+    listp = l;
 }
 
-Empresa::Empresa() //Constructron con parametros
+/*Empresa::Empresa() //Constructron con parametros
 {
     nombre="";
     descripcion="";
     rif="";
-}
+    listp = NULL;
+}*/
 
 void Empresa::setNombre(string name){
     nombre=name;
@@ -194,6 +144,9 @@ void Empresa::setDescripcion(string des){
 void Empresa::setRif(string riff){
     rif=riff;
 }
+void Empresa::setListp(list<ProductoServicio> l){
+    listp = l;
+}
 string Empresa::getNombre(){
     return nombre;
 }
@@ -202,6 +155,9 @@ string Empresa::getDescripcion(){
 }
 string Empresa::getRif(){
     return rif;
+}
+list<ProductoServicio> Empresa::getList(){
+    return listp;
 }
 
 //Procesos
@@ -212,6 +168,14 @@ void Empresa::registrar(){
 
 void Empresa::rellenarStock(){
     printf("Stock rellenado con exito\n");
+}
+
+void Empresa::añadirProducto(ProductoServicio p, int num){
+    printf("producto añadido con exito\n");
+}
+
+void Empresa::quitarProducto(ProductoServicio p, int num){
+    printf("producto quitado con exito\n");
 }
 //FIN CLASE EMPRESA
 
@@ -739,15 +703,163 @@ void registrarCliente(Cliente c){
 }
 
 
+
+
+
+//-------------------------------------------------------------------------------------------------------------------------
+//LLEVAR PRODUCTO
+void llevarpe(Transporte t, list<Empresa> liste){
+    
+    list<ProductoServicio> lista;
+    // Se obtiene un iterador al inicio de la lista  
+    list<Empresa>::iterator it = liste.begin();
+    bool band=false; bool band2= false;
+    int i, i2; //indice de la empresa, el almacen tien el mismo indice
+    int indice1, indice2;
+   
+    printf("Nombre de la empresa a llevar el producto");
+    char temporal[100];
+    scanf("%100s", temporal);
+    string nombre = temporal;
+    
+    //Lista de empresas
+    while (it != liste.end() ){ 
+        cout << it->getNombre() << endl;
+        it++;
+    }
+    
+    //Buscar si la empresa existe
+    while(band == false){
+        // Buscamos el elemento nombre
+        while (it != liste.end()){ 
+            if(it->getNombre() == nombre){
+                band = true;
+                indice1=i;
+            }
+            i++;
+            it++;
+        }
+        
+        if(band == false){
+            int resp;
+            printf("la empresa no existe\n");
+            printf("Desea continuar??\n presion [1] para si y [0] para no. . .\n");
+            scanf("%d",&resp);
+            
+            while(resp!=1 && resp!=0){
+                if(resp == 0){
+                    printf("Entrega de producto finalizado\n");
+                    return;
+                } else if(resp == 1){
+                    printf("Nombre de la empresa a llevar el producto");
+                    scanf("%100s", temporal);
+                    nombre = temporal;
+                }else{
+                    printf("respuesta invalida\n\n");
+                }
+            }
+            
+        }
+    }
+        
+        //printf("Empresa seleccionada: %s\n", nombre);
+        
+        //Buscar la la lista de productos y servicios de la empresa
+        int c=indice1;
+        i=0;
+        while (it != liste.end() ){ 
+            if(i==indice1){
+                lista = it->getList();
+            }
+            i++;
+            it++;
+        }
+    
+        printf("Ingersar el producto a enviar\n");
+        scanf("%100s", temporal);
+        string nombreP = temporal;
+   
+        
+    list<ProductoServicio>::iterator it2 = lista.begin();
+        
+        
+        //Buscar si el producto existe
+    while(band2 == false){
+        // Buscamos el elemento nombre
+        while (it2 != lista.end()){ 
+            if(it2->getNombre() == nombreP){
+                band2 = true;
+                indice2=i2;
+            }
+            i2++;
+            it2++;
+        }
+        
+        if(band2 == false){
+            int resp2;
+            printf("la empresa no existe\n");
+            printf("Desea continuar??\n presion [1] para si y [0] para no. . .\n");
+            scanf("%d",&resp2);
+            
+            while(resp2!=1 && resp2!=0){
+                if(resp2 == 0){
+                    printf("Entrega de producto finalizado\n");
+                    return;
+                } else if(resp2 == 1){
+                    printf("Nombre de la empresa a llevar el producto");
+                    scanf("%100s", temporal);
+                    nombreP = temporal;
+                }else{
+                    printf("respuesta invalida\n\n");
+                }
+            }
+            
+        }
+    }
+    
+    printf("Ingersar el producto a enviar\n");
+    scanf("%100s", temporal);
+    string des = temporal;
+    
+    printf("Ingersar el producto a enviar\n");
+    scanf("%100s", temporal);
+    string cod = temporal;
+    
+    printf("Ingersar el producto a enviar\n");
+    int prec;
+    scanf("%d", &prec);
+    
+    printf("Ingersar el producto a enviar\n");
+    int cant;
+    scanf("%d", &cant);
+    
+    ProductoServicio p = ProductoServicio(nombreP,des,prec,cod,cant);
+}
+
+
+
+
+
+
+
+
+
+
+
+//MAIN
+
 int main()
 {
+    list<Cliente> listC;
+    list<Empresa> listE;
+    list<ProductoServicio> listP;
+    list<Transporte> listT;
     Cliente c = Cliente();
     Cliente c1 = Cliente("Cesar","04165881300","Yara Yara");
     ProductoServicio p1 = ProductoServicio("Termo","Envase para bebidas",2000,"02134",4);
     ProductoServicio p2 = ProductoServicio("telefono","Telefono Iphone",9999,"32104",21);
-    Empresa e1 = Empresa("Pollera Cesar","Se vende pollo","J-123456789");
-    Empresa e = Empresa();
-    AlmacenPropio a1 = AlmacenPropio(ProductoServicio("Libro","Libro de programacion en C++",100,"0001",20), 5);
+    //Empresa e1 = Empresa("Pollera Cesar","Se vende pollo","J-123456789");
+    Transporte t1 = Transporte("Noel","200000","aveo","2a3b",4);
     
     //Cliente
     registrarCliente(c);
@@ -755,17 +867,6 @@ int main()
     
     c1.comprar(c1,p1);
     
-    c1.afiliarse(c1,e1);
-    
-    //Empresa
-    registrarEmpresa(e);
-    e1.registrar();
-    
-    e1.rellenarStock();
-    
-    //Almacen propio
-    a1.añadirProducto(p1,3);
-    a1.quitarProducto(p2,5);
     
     //Transporte
     
