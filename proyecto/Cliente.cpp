@@ -36,3 +36,16 @@ const string &Cliente::getResidencia() const {
 void Cliente::setResidencia(const string &residencia) {
     Cliente::residencia = residencia;
 }
+
+bool Cliente::comprar(Solicitud &solicitud) {
+    if (solicitud==NULL){
+        cout<<"[Error] Solicitud inexistente."<<endl;
+        return false;
+    }
+    if (solicitud.verificarStatus()){
+        cout<<"[Aviso] Compra realizada con exito"<<endl;
+        return true;
+    }else{
+        cout<<"[Error] Error en la compra"<<endl;
+    }
+}

@@ -11,6 +11,7 @@ using namespace std;
 class MetodoPago {
 protected:
     int cantidad;
+    int abono;
 public:
     MetodoPago();
 
@@ -19,6 +20,12 @@ public:
     int getCantidad() const;
 
     void setCantidad(int cantidad);
+
+    int getAbono() const;
+
+    void setAbono(int abono);
+
+    bool verificar();
 };
 
 

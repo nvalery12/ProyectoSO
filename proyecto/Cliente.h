@@ -6,6 +6,7 @@
 #define PROYECTO_CLIENTE_H
 #include <iostream>
 #include <string>
+#include "Solicitud.h"
 
 using namespace std;
 
@@ -31,7 +32,7 @@ public:
 
     void setResidencia(const string &residencia);
 
-    bool comprar();
+    bool comprar(Solicitud &solicitud);
 
     bool afiliarse();
 };

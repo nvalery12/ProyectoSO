@@ -10,15 +10,17 @@ Solicitud::Solicitud() {
     transporte=Transporte();
     cliente=Cliente();
     status="";
+    empresa=Empresa();
 }
 
 Solicitud::Solicitud(const ProductoServicio &producto, const MetodoPago &metodo, const Transporte &transporte,
-                     const Fecha &entrega, const string &status, const Cliente &cliente) : producto(producto),
+                     const Fecha &entrega, const string &status, const Cliente &cliente,const Empresa &empresa) : producto(producto),
                                                                                            metodo(metodo),
                                                                                            transporte(transporte),
                                                                                            entrega(entrega),
                                                                                            status(status),
-                                                                                           cliente(cliente) {}
+                                                                                           cliente(cliente),
+                                                                                           empresa(empresa){}
 
 const ProductoServicio &Solicitud::getProducto() const {
     return producto;
@@ -68,7 +70,36 @@ void Solicitud::setCliente(const Cliente &cliente) {
     Solicitud::cliente = cliente;
 }
 
-string Solicitud::verificarStatus(){
-    printf("Verificacion realizada con exito\n");
-    return "SIIIIIUUUU";
+const Cliente &Solicitud::getEmpresa() const {
+    return empresa;
+}
+
+void Solicitud::setEmpresa(const Cliente &empresa) {
+    Solicitud::empresa = empresa;
+}
+
+bool Solicitud::verificarStatus(){
+    if(producto==NULL) return false;
+    if(producto.getCantidad()==0){
+        if(empresa==NULL) return false;
+        if (empresa.getListp()==NULL) return NULL;
+        list<ProductoServicio> lista= empresa.getListp();
+        lista.remove(producto);
+        return false;
+    }
+    if(producto.getCantidad()=>1){
+        if(metodo.verificar()){
+            producto.setCantidad(producto.getCantidad()-1);
+            if (producto.getCantidad()==0){
+                if(empresa==NULL) return false;
+                if (empresa.getListp()==NULL) return NULL;
+                list<ProductoServicio> lista= empresa.getListp();
+                lista.remove(producto);
+            }
+            printf("Verificacion realizada con exito\n");
+            return true;
+        }
+        return false;
+    }
+    return false;
 }

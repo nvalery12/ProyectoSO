@@ -15,3 +15,18 @@ int MetodoPago::getCantidad() const {
 void MetodoPago::setCantidad(int cantidad) {
     MetodoPago::cantidad = cantidad;
 }
+
+int MetodoPago::getAbono() const {
+    return abono;
+}
+
+void MetodoPago::setAbono(int abono) {
+    MetodoPago::abono = abono;
+}
+
+bool MetodoPago::verificar() {
+    if(abono=>cantidad){
+        return true;
+    }
+    return false;
+}
