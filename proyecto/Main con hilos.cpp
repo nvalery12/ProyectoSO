@@ -1,6 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <list>
+#include <thread>
 
 using namespace std;
 
@@ -1545,7 +1546,7 @@ bool clientecomprar(list<Cliente> listc){
             it2++;
         }
     }else{
-        printf("Lista vacia. No se puede realizar la afiliacion\n");
+        printf("Lista vacia. No se puede realizar la operacion\n");
         return c.comprar(band);
     }
     
@@ -1591,120 +1592,145 @@ bool clientecomprar(list<Cliente> listc){
     return c.comprar(bandera);
 }
 
-//MAIN
 
-int main()
-{
-    int resp=0;
-    int resp2=0;
-    bool band = false;
-    list<Cliente> listClientesGeneral;
-    list<Empresa> listEmpresas;
-    list<Transporte> listTransportes;
-    list<ProductoServicio> listPyS;
 
-    printf("BIENVENIDO\nQue desea hacer?\n[0] SALIR\n[1] OPERACION DE EMPRESA\n[2] OPERACION DE CLIENTE\n[3] OPERACION DE TRANSPORTE\n");
-    scanf("%d", &resp);
 
-    while( resp != 0 ){
 
-        switch ( resp ) {
 
-                case 0:
-                    printf("Fin del programa");
-                    break;
 
-                //OPERACION DE EMPRESAS
-                case 1:
-                    printf("\n\nOPERACION DE EMPRESAS\nQue desea hacer?\n[1] REGISTRAR EMPRESA\n[2] RELLENAR STOCK\n[3] VACIAR STOCK\n");
-                    printf("[4] AGREGAR PRODUCTO\n[5] ELIMINAR PRODUCTO\n");
-                    scanf("%d", &resp2);
 
-                    switch (resp2)
-                    {
-                        case 1:
-                            listEmpresas = registrarEmpresa(listEmpresas);
-                            break;
-                        
-                        case 2:
-                            band = addstock(listEmpresas);
-                            break;
-                        
-                        case 3:
-                            band = deletestock(listEmpresas);
-                            break;
-                        
-                        case 4:
-                            band = agregarP(listEmpresas);
-                            break;
-                        
-                        case 5:
-                            band = quitarP(listEmpresas);
-                            break;
 
-                        default:
-                            break;
-                    }
 
-                    break;
+
+
+
+void mensaje(){
+    printf("¿Como estas?\n");
+    return;
+}
+
+void* reception(void *arg){
+    printf("\n\nOPERACION DE EMPRESAS\nQue desea hacer?\n[1] REGISTRAR EMPRESA\n[2] RELLENAR STOCK\n[3] VACIAR STOCK\n");
+    printf("[4] AGREGAR PRODUCTO\n[5] ELIMINAR PRODUCTO\n");
+    int resp2;
+    scanf("%d", &resp2);
+
+    switch (resp2)
+    {
+        case 1:
+            printf("Hola\n");
+            mensaje();
+            //listEmpresas = registrarEmpresa(listEmpresas);
+            break;
+        
+        case 2:
+            printf("Hola\n");
+            break;
+        
+        case 3:
+            printf("Hola\n");
+            //band = deletestock(listEmpresas);
+            break;
+        
+        case 4:
+            printf("Hola\n");
+            //band = agregarP(listEmpresas);
+            break;
+        
+        case 5:
+            printf("Hola\n");
+            //band = quitarP(listEmpresas);
+            break;
+
+        default:
+            break;
+    }
+    return NULL;
+}
+
+void* review(void *arg){
+    printf("\n\nOPERACION DE CLIENTE\nQue desea hacer?\n[1] REGISTRAR CLIENTE\n[2] AFILIARSE A EMPRESA\n[3] HACER SOLICITUD\n");
+    printf("[4] COMPRAR PRODUCTO\n");
+    int resp3;
+    scanf("%d", &resp3);
+
+    switch (resp3)
+    {
+        case 1:
+            printf("hola\n");
+            mensaje();
+            //listClientesGeneral = registrarCliente(listClientesGeneral);
+            break;
+        
+        case 2:
+            printf("hola");
+            //band = clienteafiliar(listClientesGeneral, listEmpresas);
+            break;
+        
+        case 3:
+            printf("hola");
+            //Hacer solicitud
+            break;
+        
+        case 4:
+            printf("hola");
+            //Comprar producto
+            break;
+        
+        case 5:
+            printf("hola");
+            //band = quitarP(listEmpresas);
+            break;
+
+        default:
+            break;
+    }
+    return NULL;
+}
+
+void* qualityCheck(void *arg){
+    printf("\n\nOPERACION DE TRANSPORTE\nQue desea hacer?\n[1] REGISTRAR TRANSPORTE\n[2] ENVIAR PRODUCTO A EMPRESA\n[3] ENVIAR PRODUCTO A CASA DE UN CLIENTE\n");
+    int resp3;
+    scanf("%d", &resp3);
+
+    switch (resp3)
+    {
+        case 1:
+            printf("hola\n");
+            mensaje();
+            //listTransportes = registrarTransporte(listTransportes);
+            break;
+        
+        case 2:
+            printf("hola");
+            //band = llevarpe(listTransportes, listEmpresas);
+            break;
+        
+        case 3:
+            printf("hola");
+            //band = llevarpc(listTransportes, listClientesGeneral);
+            break;
+
+        default:
+            break;
+    }
+    return NULL;
+}
+
+int main(){
     
-                //OPERACION DE CLIENTES
-                case 2:
-                    printf("\n\nOPERACION DE CLIENTE\nQue desea hacer?\n[1] REGISTRAR CLIENTE\n[2] AFILIARSE A EMPRESA\n[3] COMPRAR PRODUCTO\n");
-                    scanf("%d", &resp2);
-
-                    switch (resp2)
-                    {
-                        case 1:
-                            listClientesGeneral = registrarCliente(listClientesGeneral);
-                            break;
-                        
-                        case 2:
-                            band = clienteafiliar(listClientesGeneral, listEmpresas);
-                            break;
-                        
-                        case 3:
-                            band = clientecomprar(listClientesGeneral);                            
-                            break;
-
-                        default:
-                            break;
-                    }
-                    //
-                    break;
+    int counter;
+    int i = 0;
+    int err;
     
-                //OPERACION DE TRANSPORTES
-                case 3:
-                    printf("\n\nOPERACION DE TRANSPORTE\nQue desea hacer?\n[1] REGISTRAR TRANSPORTE\n[2] ENVIAR PRODUCTO A EMPRESA\n[3] ENVIAR PRODUCTO A CASA DE UN CLIENTE\n");
-                    scanf("%d", &resp2);
-
-                    switch (resp2)
-                    {
-                        case 1:
-                            listTransportes = registrarTransporte(listTransportes);
-                            break;
-                        
-                        case 2:
-                            band = llevarpe(listTransportes, listEmpresas);
-                            break;
-                        
-                        case 3:
-                            band = llevarpc(listTransportes, listClientesGeneral);
-                            break;
-
-                        default:
-                            break;
-                    }
-
-                    break;
+    thread_create(&(tid[0]), NULL, &reception, NULL);
+    thread_create(&(tid[1]), NULL, &review, NULL);
+    thread_create(&(tid[2]), NULL, &qualityCheck, NULL);
     
-                default:
-                    break;
-        }
+    thread_join(tid[0], NULL);
+    thread_join(tid[1], NULL);
+    thread_join(tid[2], NULL);
+    
 
-        printf("\nQue desea hacer?\n[0] SALIR\n[1] OPERACION DE EMPRESA\n[2] OPERACION DE CLIENTE\n[3] OPERACION DE TRANSPORTE\n");
-        scanf("%d", &resp);
-    } 
- 
     return 0;
 }
