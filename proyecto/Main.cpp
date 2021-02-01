@@ -1545,7 +1545,7 @@ bool clientecomprar(list<Cliente> listc){
             it2++;
         }
     }else{
-        printf("Lista vacia. No se puede realizar la afiliacion\n");
+        printf("Lista vacia. No se puede realizar la operacion\n");
         return c.comprar(band);
     }
     

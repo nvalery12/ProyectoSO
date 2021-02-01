@@ -1,7 +1,7 @@
 #include <iostream>
 #include <stdlib.h>
 #include <list>
-#include <thread>
+#include<pthread.h>
 
 using namespace std;
 
@@ -1603,134 +1603,123 @@ bool clientecomprar(list<Cliente> listc){
 
 
 
-
-void mensaje(){
-    printf("¿Como estas?\n");
-    return;
-}
+pthread_t tid[3];
+int counter;
+pthread_mutex_t lock;
 
 void* reception(void *arg){
+    pthread_mutex_lock(&lock);
     printf("\n\nOPERACION DE EMPRESAS\nQue desea hacer?\n[1] REGISTRAR EMPRESA\n[2] RELLENAR STOCK\n[3] VACIAR STOCK\n");
     printf("[4] AGREGAR PRODUCTO\n[5] ELIMINAR PRODUCTO\n");
-    int resp2;
+    int resp2 = 0;
     scanf("%d", &resp2);
 
     switch (resp2)
     {
         case 1:
-            printf("Hola\n");
-            mensaje();
-            //listEmpresas = registrarEmpresa(listEmpresas);
+            listEmpresas = registrarEmpresa(listEmpresas);
             break;
         
         case 2:
-            printf("Hola\n");
+            band = addstock(listEmpresas);
             break;
         
         case 3:
-            printf("Hola\n");
-            //band = deletestock(listEmpresas);
+            band = deletestock(listEmpresas);
             break;
         
         case 4:
-            printf("Hola\n");
-            //band = agregarP(listEmpresas);
+            band = agregarP(listEmpresas);
             break;
         
         case 5:
-            printf("Hola\n");
-            //band = quitarP(listEmpresas);
+            band = quitarP(listEmpresas);
             break;
 
         default:
             break;
     }
+
+    pthread_mutex_unlock(&lock);
     return NULL;
 }
 
 void* review(void *arg){
-    printf("\n\nOPERACION DE CLIENTE\nQue desea hacer?\n[1] REGISTRAR CLIENTE\n[2] AFILIARSE A EMPRESA\n[3] HACER SOLICITUD\n");
-    printf("[4] COMPRAR PRODUCTO\n");
-    int resp3;
-    scanf("%d", &resp3);
+    pthread_mutex_lock(&lock);
+    printf("\n\nOPERACION DE CLIENTE\nQue desea hacer?\n[1] REGISTRAR CLIENTE\n[2] AFILIARSE A EMPRESA\n[3] COMPRAR PRODUCTO\n");
+    int resp2 = 0;
+    scanf("%d", &resp2);
 
-    switch (resp3)
+    switch (resp2)
     {
         case 1:
-            printf("hola\n");
-            mensaje();
-            //listClientesGeneral = registrarCliente(listClientesGeneral);
+            listClientesGeneral = registrarCliente(listClientesGeneral);
             break;
         
         case 2:
-            printf("hola");
-            //band = clienteafiliar(listClientesGeneral, listEmpresas);
+            band = clienteafiliar(listClientesGeneral, listEmpresas);
             break;
         
         case 3:
-            printf("hola");
-            //Hacer solicitud
-            break;
-        
-        case 4:
-            printf("hola");
-            //Comprar producto
-            break;
-        
-        case 5:
-            printf("hola");
-            //band = quitarP(listEmpresas);
+            band = clientecomprar(listClientesGeneral);                            
             break;
 
         default:
             break;
     }
+    pthread_mutex_unlock(&lock);
     return NULL;
 }
 
 void* qualityCheck(void *arg){
+    pthread_mutex_lock(&lock);
     printf("\n\nOPERACION DE TRANSPORTE\nQue desea hacer?\n[1] REGISTRAR TRANSPORTE\n[2] ENVIAR PRODUCTO A EMPRESA\n[3] ENVIAR PRODUCTO A CASA DE UN CLIENTE\n");
-    int resp3;
-    scanf("%d", &resp3);
+    int resp2=0;
+    scanf("%d", &resp2);
 
-    switch (resp3)
+    switch (resp2)
     {
         case 1:
-            printf("hola\n");
-            mensaje();
-            //listTransportes = registrarTransporte(listTransportes);
+            listTransportes = registrarTransporte(listTransportes);
             break;
         
         case 2:
-            printf("hola");
-            //band = llevarpe(listTransportes, listEmpresas);
+            band = llevarpe(listTransportes, listEmpresas);
             break;
         
         case 3:
-            printf("hola");
-            //band = llevarpc(listTransportes, listClientesGeneral);
+            band = llevarpc(listTransportes, listClientesGeneral);
             break;
 
         default:
             break;
     }
+    pthread_mutex_unlock(&lock);
     return NULL;
 }
 
 int main(){
-    
-    int counter;
     int i = 0;
     int err;
+    list<Cliente> listClientesGeneral;
+    list<Empresa> listEmpresas;
+    list<Transporte> listTransportes;
+    list<ProductoServicio> listPyS;
     
-    thread_create(&(tid[0]), NULL, &reception, NULL);
-    thread_create(&(tid[1]), NULL, &review, NULL);
-    thread_create(&(tid[2]), NULL, &qualityCheck, NULL);
+    if (pthread_mutex_init(&lock, NULL) != 0){
+        printf("\n se fallo la inicializacion del mutex\n");
+        return 1;
+    }
     
-    thread_join(tid[0], NULL);
-    thread_join(tid[1], NULL);
-    thread_join(tid[2], NULL);
+    pthread_create(&(tid[0]), NULL, &reception, NULL);
+    pthread_create(&(tid[1]), NULL, &review, NULL);
+    pthread_create(&(tid[2]), NULL, &qualityCheck, NULL);
     
+    pthread_join(tid[0], NULL);
+    pthread_join(tid[1], NULL);
+    pthread_join(tid[2], NULL);
+    
+    pthread_mutex_destroy(&lock);
 
     return 0;
 }
