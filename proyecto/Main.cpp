@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdlib.h>
+#include <string>
 #include <list>
 
 using namespace std;
@@ -41,7 +42,7 @@ ProductoServicio::ProductoServicio(string name,string des,int prec,string cod,in
 }
 
 ProductoServicio::ProductoServicio(){ //Constructor sin parametros
-    nombre="";
+    nombre="vacio";
     descripcion="";
     precio=0;
     codigo="";
@@ -691,10 +692,6 @@ bool Cliente::afiliarse(Cliente c, Empresa e){
 //-------------------------------------------------------------------------------------------------------------------------
 //Funcion de registro de Transporte
 list<Transporte> registrarTransporte(list<Transporte> listT){
-    char temporal[100];
-    char temporal2[100];
-    char temporal3[100];
-    char temporal4[100];
     string np="";
     string cip="";
     string vehiculo="";
@@ -702,23 +699,19 @@ list<Transporte> registrarTransporte(list<Transporte> listT){
     int cap=0;
     
     printf("Ingresar nombre del propietario\n");
-    scanf("%100s", temporal);
-    np = temporal;
+    cin >> np;
     
     printf("Ingresar la Cedula de identidad del propietario\n");
-    scanf("%100s", temporal2);
-    cip = temporal2;
+    cin >> cip;
     
     printf("Ingresar el vehiculo del propietario\n");
-    scanf("%100s", temporal3);
-    vehiculo = temporal3;
+    cin >> vehiculo;
     
     printf("Ingresar la placa del vehiculo del propietario\n");
-    scanf("%100s", temporal4);
-    placa = temporal4;
+    cin >> placa;
     
     printf("Ingresar la capcidad vehiculo\n");
-    scanf("%d", &cap);
+    cin >> cap;
     
     list<Transporte>::iterator it = listT.begin();
     bool band = true;
@@ -726,7 +719,7 @@ list<Transporte> registrarTransporte(list<Transporte> listT){
     if(listT.empty() == false){
         // Buscamos el elemento placa
         while (it != listT.end()){ 
-            if(it->getPlaca() == placa){
+            if(it->getPlaca().compare(placa) == 0){
                 band = false;
                 printf("Transporte ya registrado\n");
                 break;
@@ -753,23 +746,19 @@ list<Transporte> registrarTransporte(list<Transporte> listT){
 //-------------------------------------------------------------------------------------------------------------------------
 //Funcion de registro de empresa
 list<Empresa> registrarEmpresa(list<Empresa> listE){
-    char temporal[100];
-    char temporal2[100];
     list<ProductoServicio> listp;
     string nombre="";
     string descripcion="";
     int codigo=0;
     
     printf("Ingresar nombre de la empresa\n");
-    scanf("%100s", temporal);
-    nombre = temporal;
+        cin >> nombre;
     
     printf("Ingresar la descripcion de la empresa\n");
-    scanf("%100s", temporal2);
-    descripcion = temporal2;
+    cin >> descripcion;
     
     printf("Ingresar el rif de la empresa\n");
-    scanf("%d", codigo);
+        cin >> codigo;
     string rifC(std::to_string(codigo));
     string rif = "J-" + rifC;
     
@@ -779,7 +768,7 @@ list<Empresa> registrarEmpresa(list<Empresa> listE){
     if(listE.empty() == false){
         // Buscamos el elemento rif
         while (it != listE.end()){ 
-            if(it->getRif() == rif){
+            if(it->getRif().compare(rif) == 0){
                 band = false;
                 printf("Empresa ya registrada\n");
                 break;
@@ -810,25 +799,19 @@ list<Empresa> registrarEmpresa(list<Empresa> listE){
 //-------------------------------------------------------------------------------------------------------------------------
 //Funcion de registro de cliente
 list<Cliente> registrarCliente(list<Cliente> listC){
-    char temporal[100];
-    char temporal2[100];
-    char temporal3[100];
     Empresa e = Empresa();
     string nombre="";
     string numTlf="";
     string residencia="";
     
     printf("Ingresar nombre del cliente\n");
-    scanf("%100s", temporal);
-    nombre = temporal;
+    cin >> nombre;
     
     printf("Ingresar numero de telefono del cliente\n");
-    scanf("%100s", temporal2);
-    numTlf = temporal2;
+    cin >> numTlf;
     
     printf("Ingresar residencia del cliente\n");
-    scanf("%100s", temporal3);
-    residencia = temporal3;
+    cin >> residencia;
     
     list<Cliente>::iterator it = listC.begin();
     bool band = true;
@@ -836,7 +819,7 @@ list<Cliente> registrarCliente(list<Cliente> listC){
     if(listC.empty() == false){
         // Buscamos el elemento numero de telefono
         while (it != listC.end()){ 
-            if(it->getNumTlf() == numTlf){
+            if(it->getNumTlf().compare(numTlf) == 0){
                 band = false;
                 printf("Cliente ya registrado\n");
                 break;
@@ -869,35 +852,34 @@ bool llevarpe(list<Transporte> listT, list<Empresa> liste){
     Transporte t = Transporte();
     // Se obtiene un iterador al inicio de la lista  
     bool band=false; bool band2= false;
-    char temporal[100];
-    char temporal2[100];
-    char temporal3[100];
-    char temporal4[100];
 
-    printf("ingresar la placa del transporte");
-    char p[100];
-    scanf("%100s", p);
-    string placa = p;
+    printf("ingresar la placa del transporte\n");
+    string placa;
+    cin >> placa;
 
     list<Transporte>::iterator it3 = listT.begin();
 
     //Lista de Transportes
-    while (it3 != listT.end() ){ 
-        cout << it3->getPlaca() << endl;
-        it3++;
+    if(listT.empty() == false){
+        while (it3 != listT.end() ){ 
+            cout << it3->getPlaca() << endl;
+            it3++;
+        }
     }
     
+    it3 = listT.begin();
+
     //Buscar si la empresa existe
     if(listT.empty() == false){
         while (it3 != listT.end()){ 
-            if(it3->getPlaca() == placa){
+            if(it3->getPlaca().compare(placa) == 0){
                 t = *it3;
                 band = true;
             }
             it3++;
         }
     }else{
-        printf("Lista vacia. No se puede realizar la operacion");
+        printf("Lista vacia. No se puede realizar la operacion\n");
     }
 
     if(band == false){
@@ -908,9 +890,8 @@ bool llevarpe(list<Transporte> listT, list<Empresa> liste){
     
 
     printf("Nombre de la empresa a llevar el producto");
-    temporal[100];
-    scanf("%100s", temporal);
-    string nombre = temporal;
+    string nombre = "";
+    cin >> nombre;
 
     list<Empresa>::iterator it = liste.begin();
     //Lista de empresas
@@ -919,10 +900,12 @@ bool llevarpe(list<Transporte> listT, list<Empresa> liste){
         it++;
     }
     
+    it = liste.begin();
+
     //Buscar si la empresa existe
     if(liste.empty() == false){
         while (it != liste.end()){ 
-            if(it->getNombre() == nombre){
+            if(it->getNombre().compare(nombre) == 0){
                 band = true;
                 e = *it;
                 lista = it->getList();
@@ -931,6 +914,7 @@ bool llevarpe(list<Transporte> listT, list<Empresa> liste){
         }
     }else{
         printf("Empresa no existe. No se pudo realizar el proceso");
+        return false;
     }
 
     if(band == false){
@@ -940,8 +924,8 @@ bool llevarpe(list<Transporte> listT, list<Empresa> liste){
 
 
     printf("Ingersar codigo del producto a enviar\n");
-    scanf("%100s", temporal2);
-    string cod = temporal2;          
+    string cod = "";
+    cin >> cod;          
     list<ProductoServicio>::iterator it2 = lista.begin();
     string nombreP = "";
     int cant = 0;
@@ -950,7 +934,7 @@ bool llevarpe(list<Transporte> listT, list<Empresa> liste){
     while(band2 == false){
         // Buscamos el elemento nombre
         while (it2 != lista.end()){ 
-            if(it2->getCodigo() != cod){
+            if(it2->getCodigo().compare(cod) != 0){
                 band2 = true;
                 nombreP = it2->getNombre();
             }
@@ -964,26 +948,26 @@ bool llevarpe(list<Transporte> listT, list<Empresa> liste){
     
     if(band2 == false){
         printf("Ingersar la descripcion del producto a enviar\n");
-        scanf("%100s", temporal3);
-        string des = temporal3;
+        string des = "";
+        cin >> des;
         
         printf("Ingersar el nombre del producto a enviar\n");
-        scanf("%100s", temporal4);
-        nombreP = temporal4;
+        nombreP = "";
+        cin >> nombreP;
         
         printf("Ingersar el precio producto a enviar\n");
         int prec;
-        scanf("%d", &prec);
+        cin >> prec;
         
         printf("Ingersar la cantidad\n");
-        scanf("%d", &cant);
+        cin >> cant;
         
         ProductoServicio p = ProductoServicio(nombreP,des,prec,cod,cant);
         
         e.agregarProducto(e,p);
     }else{
         printf("Ingersar la cantidad a enviar\n");
-        scanf("%d", &cant);
+        cin >> cant;
         e.rellenarStock(e,cod,cant);
     }
     
@@ -1014,14 +998,11 @@ bool llevarpc(list<Transporte> listT, list<Cliente> liste){
     
     Cliente c = Cliente();
     list<ProductoServicio> lista;
-    // Se obtiene un iterador al inicio de la lista  
-    list<Cliente>::iterator it = liste.begin();
     bool band=false, band2 = false;
    
     printf("ingresar la placa del transporte");
-    char p[100];
-    scanf("%100s", p);
-    string placa = p;
+    string placa = "";
+    cin >> placa;
 
     Transporte t = Transporte();
     list<Transporte>::iterator it3 = listT.begin();
@@ -1032,42 +1013,48 @@ bool llevarpc(list<Transporte> listT, list<Cliente> liste){
         it3++;
     }
     
+    it3 = listT.begin();
+
     //Buscar si el transporte existe
     if(listT.empty() == false){
         while (it3 != listT.end()){ 
-            if(it3->getPlaca() == placa){
+            if(it3->getPlaca().compare(placa) == 0){
                 t = *it3;
                 band = true;
             }
             it3++;
         }
     }else{
-        printf("Lista vacia. No se puede realizar la operacion");
+        printf("Lista vacia. No se puede realizar la operacion\n");
     }
 
     if(band == false){
-        printf("Transporte no existe. No se pudo realizar el proceso");
+        printf("Transporte no existe. No se pudo realizar el proceso\n");
         return false;            
     }
 
 
 
     printf("Nombre del cliente a llevar el producto");
-    char temporal[100];
-    scanf("%100s", temporal);
-    string nombre = temporal;
+    string nombre = "";
+    cin >> nombre;
     
+    // Se obtiene un iterador al inicio de la lista  
+    list<Cliente>::iterator it = liste.begin();
+
     //Lista de clientes
     while (it != liste.end() ){ 
         cout << it->getNombre() << endl;
         it++;
     }
     
+    it = liste.begin();
+
     //Buscar si la cliente existe
     while(band == false){
         // Buscamos el elemento nombre
         while (it != liste.end()){ 
-            if(it->getNombre() == nombre){
+            if(it->getNombre().compare(nombre) == 0){
                 c = *it;
                 band = true;
                 break;
@@ -1081,7 +1068,7 @@ bool llevarpc(list<Transporte> listT, list<Cliente> liste){
         }
     }
     
-    if(c.getEmpresa().getNombre() == ""){
+    if(c.getEmpresa().getNombre().compare("vacio")){
         printf("el cliente no se encuentra afiliado a una empresa");
         return false;
     }
@@ -1091,9 +1078,8 @@ bool llevarpc(list<Transporte> listT, list<Cliente> liste){
     list<ProductoServicio>::iterator it2 = lisp.begin();
 
     printf("Ingersar codigo del producto a enviar\n");
-    char temporal2[100];
-    scanf("%100s", temporal2);
-    string cod = temporal2;          
+    string cod = "";
+    cin >> cod;          
     string nombreP = "";
     int cant = 0;
 
@@ -1101,7 +1087,7 @@ bool llevarpc(list<Transporte> listT, list<Cliente> liste){
     while(band2 == false){
         // Buscamos el elemento nombre
         while (it2 != lista.end()){ 
-            if(it2->getCodigo() != cod){
+            if(it2->getCodigo().compare(cod) != 0){
                 band2 = true;
                 nombreP = it2->getNombre();
             }
@@ -1116,7 +1102,7 @@ bool llevarpc(list<Transporte> listT, list<Cliente> liste){
     
     if(band2 == false){
         printf("Ingersar la cantidad a enviar\n");
-        scanf("%d", &cant);
+        cin >> cant;
         e.vaciarStock(e,cod,cant);
     }
     
@@ -1143,56 +1129,53 @@ bool llevarpc(list<Transporte> listT, list<Cliente> liste){
 bool agregarP(list<Empresa> liste){
     Empresa e = Empresa();
     bool band = false;
-    char nom[50];
-    char temporal[100];
-    char temporal2[100];
-    char temporal3[100];
     list<Empresa>::iterator it = liste.begin();
     
     printf("Ingresar el nombre de la empresa a agregar el producto\n");
-    scanf("%100s", nom);
-    string nombre = nom;
+    string nombre = "";
+    cin >> nombre;
 
     if(liste.empty() == false){
         if(liste.empty() == false){
             // Buscamos el elemento nombre
             while (it != liste.end()){ 
-                if(it->getNombre() == nombre){
+                if(it->getNombre().compare(nombre) == 0){
                     e = *it;
                     band = true;
                     break;
                 }
                 it++;
             }
-            if(band == false){
-                printf("No esta la empresa a buscar\n");
-                return false;
-            }
         }
     }else{
-        printf("Lista vacia. no se puede agrgar objeto");
+        printf("Lista vacia. no se puede agregar objeto");
+        return false;
+    }
+
+    if(band == false){
+        printf("No existe la empresa a buscar\n");
         return false;
     }
     
     printf("Ingersar el producto a enviar\n");
-    scanf("%100s", temporal);
-    string nombreP = temporal;
+    string nombreP = "";
+    cin >> nombreP;
     
     printf("Ingersar la descripcion del producto a enviar\n");
-    scanf("%100s", temporal2);
-    string des = temporal2;
+    string des = "";
+    cin >> des;
     
     printf("Ingersar el codigo del producto a enviar\n");
-    scanf("%100s", temporal3);
-    string cod = temporal3;
+    string cod = "";
+    cin >> cod;
     
     printf("Ingersar el precio del producto a enviar\n");
     int prec;
-    scanf("%d", &prec);
+    cin >> prec;
     
     printf("Ingersar el cantidad del producto a enviar\n");
     int cant;
-    scanf("%d", &cant);
+    cin >> cant;
     
     ProductoServicio p = ProductoServicio(nombreP,des,prec,cod,cant);
     
@@ -1227,26 +1210,38 @@ bool quitarP(list<Empresa> liste){
     if(liste.empty() == false){
         while (it != liste.end()){ 
             if(it->getNombre() == nombre){
+                band = true;
                 e = *it;
                 break;
             }
             it++;
         }
     }else{
-        printf("Lista vacia. Producto no enviado\n");
+        printf("Lista vacia. Producto no eliminado\n");
         return false;
     }
 
-    printf("Ingersar el codigo del producto a eliminar\n");
-    scanf("%100s", temporal2);
-    string codigo = temporal2;
-    
+    if(band == false){
+        printf("La empresa no existe en la lista\n");
+        return false;
+    }
+
     list<ProductoServicio> lista = e.getList();
     list<ProductoServicio>::iterator it2 = lista.begin();
-    // Buscamos el elemento nombre
-
     while (it2 != lista.end()){ 
-        if(it2->getCodigo() == codigo){
+        cout << "Nombre: " << it2->getNombre() << ". Codigo: " << it2->getCodigo() << endl;
+        it2++;
+    }
+
+    printf("\nIngersar el codigo del producto a eliminar\n");
+    string codigo = "";
+    cin >> codigo;
+    
+    it2 = lista.begin();
+    band = false;
+    // Buscamos el elemento nombre
+    while (it2 != lista.end()){ 
+        if(it2->getCodigo().compare(codigo) == 0){
             e.quitarProducto(e,codigo);
             band = true;
             break;
@@ -1276,18 +1271,17 @@ bool quitarP(list<Empresa> liste){
 //Funcion que rellena el stock
 bool addstock(list<Empresa> liste){
     Empresa e;
-    char temporal[100], temporal2[100];
     int cant=0;
-    bool band = false, band2=false;
+    bool band = false;
     
     printf("Ingersar el nombre de la empresar\n");
-    scanf("%100s", temporal);
-    string nombre = temporal;
+    string nombre = "";
+    cin >> nombre;
     
     list<Empresa>::iterator it = liste.begin();
     // Buscamos el elemento nombre
     while (it != liste.end()){ 
-        if(it->getNombre() == nombre){
+        if(it->getNombre().compare(nombre) == 0){
             band = true;
             e = *it;
         }
@@ -1308,23 +1302,26 @@ bool addstock(list<Empresa> liste){
     }
 
     printf("Ingersar el codigo de el producto\n");
-    scanf("%100s", temporal2);
-    string codigo = temporal2;
+    string codigo = "";
+    cin >> codigo;
 
+    it2 = listp.begin();
+    band = false;
     // Buscamos el elemento nombre
     while (it2 != listp.end()){ 
-        if(it2->getCodigo() == codigo){
-            band2 = true;
+        if(it2->getCodigo().compare(codigo) == 0){
+            band = true;
         }
         it2++;
     }
     
-    if(band2 == false){
+    if(band == false){
+        printf("No existe el objeto a rellenar el stock\n");
         return false;
     }
     
-    printf("Ingersar el codigo de el producto\n");
-    scanf("%d", &cant);
+    printf("Ingersar la cantidad del producto\n");
+    cin >> cant;
     
     e.rellenarStock(e,codigo,cant);
     
@@ -1355,16 +1352,16 @@ bool deletestock(list<Empresa> liste){
     Empresa e;
     char temporal[100], temporal2[100];
     int cant=0;
-    bool band = false, band2=false;
+    bool band = false;
     
     printf("Ingersar el nombre de la empresar\n");
-    scanf("%100s", temporal);
-    string nombre = temporal;
+    string nombre = "";
+    cin >> nombre;
     
     list<Empresa>::iterator it = liste.begin();
     // Buscamos el elemento nombre
     while (it != liste.end()){ 
-        if(it->getNombre() == nombre){
+        if(it->getNombre().compare(nombre) == 0){
             band = true;
             e = *it;
         }
@@ -1372,6 +1369,7 @@ bool deletestock(list<Empresa> liste){
     }
     
     if(band == false){
+        printf("Produscto no existe. Operacion no realizada\n");
         return false;
     }
 
@@ -1385,23 +1383,25 @@ bool deletestock(list<Empresa> liste){
     }
 
     printf("Ingersar el codigo de el producto\n");
-    scanf("%100s", temporal2);
-    string codigo = temporal2;
+    string codigo = "";
+    cin >> codigo;
 
+    it2 = listp.begin();
+    band = false;
     // Buscamos el elemento nombre
     while (it2 != listp.end()){ 
-        if(it2->getCodigo() == codigo){
-            band2 = true;
+        if(it2->getCodigo().compare(codigo) == 0){
+            band = true;
         }
         it2++;
     }
     
-    if(band2 == false){
+    if(band == false){
         return false;
     }
     
-    printf("Ingersar el codigo de el producto\n");
-    scanf("%d", &cant);
+    printf("Ingersar la cantidad del producto\n");
+    cin >> cant;
     
     e.vaciarStock(e,codigo,cant);
     
@@ -1420,21 +1420,18 @@ bool deletestock(list<Empresa> liste){
 
 //Funcion para afiliar el cliente
 bool clienteafiliar(list<Cliente> listc, list<Empresa> liste){
-    
-    char temporal[100];
-    char temporal2[100];
-    bool band = false, band2 = false;
+    bool band = false;
 
     printf("Ingersar el numero de telefono del cliente\n");
-    scanf("%100s", temporal);
-    string num = temporal;
+    string num = "";
+    cin >> num;
     Cliente c = Cliente();
     
     list<Cliente>::iterator it = listc.begin();
     // Buscamos el elemento nombre del cliente
     if(listc.empty() == false){
         while (it != listc.end()){ 
-            if(it->getNumTlf() == num){
+            if(it->getNumTlf().compare(num) == 0){
                 band = true;
                 c = *it;
             }
@@ -1452,16 +1449,16 @@ bool clienteafiliar(list<Cliente> listc, list<Empresa> liste){
 
 
     printf("Ingersar el nombre de la empresa a afiliarse\n");
-    scanf("%100s", temporal2);
-    string nombre = temporal2;
+    string nombre = "";
+    cin >> nombre;
     Empresa e = Empresa();
     
     list<Empresa>::iterator it2 = liste.begin();
     // Buscamos el elemento nombre
     if(liste.empty() == false){ 
         while (it2 != liste.end()){ 
-            if(it2->getNombre() == nombre){
-                band2 = true;
+            if(it2->getNombre().compare(nombre) == 0){
+                band = true;
                 e = *it2;
             }
             it2++;
@@ -1470,7 +1467,7 @@ bool clienteafiliar(list<Cliente> listc, list<Empresa> liste){
         printf("Lista vacia. No se puede realizar la afiliacion\n");
     }
 
-    if(band2 == false){
+    if(band == false){
         printf("La empresa no existe\n");
         return false;
     }
@@ -1490,20 +1487,18 @@ bool clienteafiliar(list<Cliente> listc, list<Empresa> liste){
 
 //Funcion de compra del cliente
 bool clientecomprar(list<Cliente> listc){
-    char temporal[100];
-    char temporal2[100];
     bool band = false;
 
     printf("Ingersar el nombre del cliente\n");
-    scanf("%100s", temporal);
-    string nombre = temporal;
+    string nombre = "";
+    cin >> nombre;
     Cliente c = Cliente();
     
     list<Cliente>::iterator it = listc.begin();
     // Buscamos el elemento nombre del cliente
     if(listc.empty() == false){
         while (it != listc.end()){ 
-            if(it->getNombre() == nombre){
+            if(it->getNombre().compare(nombre) == 0){
                 band = true;
                 c = *it;
             }
@@ -1521,15 +1516,15 @@ bool clientecomprar(list<Cliente> listc){
 
     //Verificamos si el cliente esta registrado a una empresa
     Empresa e = c.getEmpresa();
-    if(e.getRif() == ""){ 
+    if(e.getNombre() == "vacio"){ 
         printf("El cliente no esta registrado a ninguna empresa");
         return c.comprar(band);
     }
 
     //Verificamos si en la empresa existe el objeto a comprar
     printf("Ingersar el producto a comprar por el cliente\n");
-    scanf("%100s", temporal2);
-    string producto = temporal2;
+    string producto = "";
+    cin >> producto;
 
     list<ProductoServicio> listp = e.getList();
     list<ProductoServicio>::iterator it2 = listp.begin();
@@ -1538,7 +1533,7 @@ bool clientecomprar(list<Cliente> listc){
     // Buscamos el elemento producto de la empresa
     if(listc.empty() == false){
         while (it2 != listp.end()){ 
-            if(it2->getNombre() == producto){
+            if(it2->getNombre().compare(producto) == 0){
                 band = true;
                 p = *it2;
             }
@@ -1562,13 +1557,13 @@ bool clientecomprar(list<Cliente> listc){
 
     printf("Ingresar la cantidad de dinero a abonar\n");
     int abono=0;
-    scanf("%d", &abono);
+    cin >> abono;
     cant = cant - abono;
 
     band = metodo.verificar(abono,cant);
     while(band == false){
         printf("Ingresar la cantidad de dinero a abonar\n");
-        scanf("%d", &abono);
+        cin >> abono;
         cant = cant - abono;
         band = metodo.verificar(abono,cant);
         if(band == true){
@@ -1593,20 +1588,22 @@ bool clientecomprar(list<Cliente> listc){
 
 //MAIN
 
-int main()
-{
-    int resp=0;
-    int resp2=0;
+int main(){
+    int resp=9;
+    int resp2=9;
     bool band = false;
     list<Cliente> listClientesGeneral;
     list<Empresa> listEmpresas;
     list<Transporte> listTransportes;
     list<ProductoServicio> listPyS;
 
-    printf("BIENVENIDO\nQue desea hacer?\n[0] SALIR\n[1] OPERACION DE EMPRESA\n[2] OPERACION DE CLIENTE\n[3] OPERACION DE TRANSPORTE\n");
-    scanf("%d", &resp);
+    printf("BIENVENIDO\n");
 
-    while( resp != 0 ){
+    while( resp > 0 ){
+
+        printf("Que desea hacer?\n[0] SALIR\n[1] OPERACION DE EMPRESA\n[2] OPERACION DE CLIENTE\n[3] OPERACION DE TRANSPORTE\n");
+        cin >> resp;
+        cout << resp << endl;
 
         switch ( resp ) {
 
@@ -1618,7 +1615,7 @@ int main()
                 case 1:
                     printf("\n\nOPERACION DE EMPRESAS\nQue desea hacer?\n[1] REGISTRAR EMPRESA\n[2] RELLENAR STOCK\n[3] VACIAR STOCK\n");
                     printf("[4] AGREGAR PRODUCTO\n[5] ELIMINAR PRODUCTO\n");
-                    scanf("%d", &resp2);
+                    cin >> resp2;
 
                     switch (resp2)
                     {
@@ -1646,12 +1643,11 @@ int main()
                             break;
                     }
 
-                    break;
-    
+                        
                 //OPERACION DE CLIENTES
                 case 2:
                     printf("\n\nOPERACION DE CLIENTE\nQue desea hacer?\n[1] REGISTRAR CLIENTE\n[2] AFILIARSE A EMPRESA\n[3] COMPRAR PRODUCTO\n");
-                    scanf("%d", &resp2);
+                    cin >> resp2;
 
                     switch (resp2)
                     {
@@ -1670,13 +1666,12 @@ int main()
                         default:
                             break;
                     }
-                    //
-                    break;
+                    
     
                 //OPERACION DE TRANSPORTES
                 case 3:
                     printf("\n\nOPERACION DE TRANSPORTE\nQue desea hacer?\n[1] REGISTRAR TRANSPORTE\n[2] ENVIAR PRODUCTO A EMPRESA\n[3] ENVIAR PRODUCTO A CASA DE UN CLIENTE\n");
-                    scanf("%d", &resp2);
+                    cin >> resp2;
 
                     switch (resp2)
                     {
@@ -1696,14 +1691,12 @@ int main()
                             break;
                     }
 
-                    break;
+                    
     
                 default:
-                    break;
+                break;    
         }
 
-        printf("\nQue desea hacer?\n[0] SALIR\n[1] OPERACION DE EMPRESA\n[2] OPERACION DE CLIENTE\n[3] OPERACION DE TRANSPORTE\n");
-        scanf("%d", &resp);
     } 
  
     return 0;
