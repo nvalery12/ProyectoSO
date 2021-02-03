@@ -119,9 +119,9 @@ public:
     string getRif();
     list<ProductoServicio> getList();
     bool rellenarStock(Empresa e, string codigo, int cant);
-    bool vaciarStock(Empresa e, string codigo, int cant);
-    bool agregarProducto(Empresa e, ProductoServicio p);
-    bool quitarProducto(Empresa e, string c);
+    int vaciarStock(Empresa e, string codigo, int cant);
+    list<ProductoServicio> agregarProducto(Empresa e, ProductoServicio p);
+    list<ProductoServicio> quitarProducto(Empresa e, string c);
 };
 
 Empresa::Empresa(string nombr,string des,string riff, list<ProductoServicio> l) ////Constructron sin parametros
@@ -183,36 +183,38 @@ bool Empresa::rellenarStock(Empresa e, string codigo, int cant){
     return false;
 }
 
-bool Empresa::vaciarStock(Empresa e, string codigo, int cant){
+int Empresa::vaciarStock(Empresa e, string codigo, int cant){
     list<ProductoServicio> lista = e.getList();
     list<ProductoServicio>::iterator it = lista.begin();
     
     // Buscamos el elemento codigo
     while (it != lista.end()){ 
         if(it->getCodigo() == codigo){
-            if( (it->getCantidad() - cant) > 0){
-                it->setCantidad(it->getCantidad() - cant);
-                printf("Stock vaciado con exito\n");
-                return true;
-            }else{
-                lista.erase(it);
-                e.setListp(lista);
-                printf("Stock vaciado con exito. Producto agotado\n");
-                return true;
-            }
+            printf("Stock vaciado con exito\n");
+            return it->getCantidad() - cant;
         }
         it++;
     }
-    return false;
+    return 0;
 }
 
-bool Empresa::agregarProducto(Empresa e, ProductoServicio p){
-    e.getList().push_back(p);
+list<ProductoServicio> Empresa::agregarProducto(Empresa e, ProductoServicio p){
+    list<ProductoServicio> lista = e.getList();
+    lista.push_back(p);
     printf("producto agregado con exito\n");
-    return true;
+
+    list<ProductoServicio>::iterator it = lista.begin();
+    //Lista de empresas
+    printf("Dentro e la funcion\n");
+    while (it != lista.end() ){ 
+        cout << it->getNombre() << endl;
+        it++;
+    }
+
+    return lista;
 }
 
-bool Empresa::quitarProducto(Empresa e, string c){
+list<ProductoServicio> Empresa::quitarProducto(Empresa e, string c){
     list<ProductoServicio> lista = e.getList();
     list<ProductoServicio>::iterator it = lista.begin();
     
@@ -220,15 +222,14 @@ bool Empresa::quitarProducto(Empresa e, string c){
     while (it != lista.end()){ 
         if(it->getCodigo() == c){
             lista.erase(it);
-            e.setListp(lista);
             printf("producto quitado con exito\n");
-            return true;
+            return lista;
         }
         it++;
     }
     
-    printf("producto quitado con exito\n");
-    return false;
+    printf("producto no fue encontrado en la lista\n");
+    return lista;
 }
 //FIN CLASE EMPRESA
 
@@ -505,7 +506,7 @@ public:
     MetodoPago getPago();
     Transporte getTransporte();
     string getStatus();
-    bool verificarStatus(Empresa empresa, string nombrep, bool band);
+    list<ProductoServicio> verificarStatus(Empresa empresa, string nombrep, bool band);
 };
 
 Solicitud::Solicitud(ProductoServicio p, MetodoPago pago, Transporte t, string estado)
@@ -551,12 +552,12 @@ string Solicitud::getStatus(){
 
 //PROCESOS
 
-bool Solicitud::verificarStatus(Empresa empresa, string nombrep, bool band){
-    if(producto.getCodigo() == "") return false;
+list<ProductoServicio> Solicitud::verificarStatus(Empresa empresa, string nombrep, bool band){
+    list<ProductoServicio> lista = empresa.getList();
+    if(producto.getCodigo() == "") return lista;
     if(producto.getCantidad()==0){
-        if(empresa.getRif() == "") return false;
-        if (empresa.getList().empty() == true) return false;
-        list<ProductoServicio> lista = empresa.getList();
+        if(empresa.getRif() == "") return lista;
+        if (empresa.getList().empty() == true) return lista;
         list<ProductoServicio>::iterator it = lista.begin();
         //Eliminar producto
         while (it != lista.end()){ 
@@ -565,16 +566,14 @@ bool Solicitud::verificarStatus(Empresa empresa, string nombrep, bool band){
             }
             it++;
         }
-        empresa.setListp(lista);
-        return false;
+        return lista;
     }
     if(producto.getCantidad()>=1){
         if(band == true){
             producto.setCantidad(producto.getCantidad()-1);
             if (producto.getCantidad()==0){
-                if(empresa.getRif() == "") return false;
-                if (empresa.getList().empty() == true) return false;
-                list<ProductoServicio> lista = empresa.getList();
+                if(empresa.getRif() == "") return lista;
+                if (empresa.getList().empty() == true) return lista;
                 list<ProductoServicio>::iterator it = lista.begin();
                 //Eliminar producto
                 while (it != lista.end()){ 
@@ -583,14 +582,13 @@ bool Solicitud::verificarStatus(Empresa empresa, string nombrep, bool band){
                     }
                     it++;
                 }
-                empresa.setListp(lista);
             }
             printf("Verificacion realizada con exito\n");
-            return true;
+            return lista;
         }
-        return false;
+        return lista;
     }
-    return false;
+    return lista;
 }
 
 //FIN CLASE SOLICITUD
@@ -680,7 +678,6 @@ bool Cliente::comprar(bool band) {
 }
 
 bool Cliente::afiliarse(Cliente c, Empresa e){
-    c.setEmpresa(e);
     printf("El cliente se ha afiliado a la empresa\n");
     return true;
 }
@@ -744,6 +741,62 @@ list<Transporte> registrarTransporte(list<Transporte> listT){
 
 
 //-------------------------------------------------------------------------------------------------------------------------
+list<Empresa> modEmpresa(Empresa e, list<Empresa> liste, string nombre){
+    list<Empresa>::iterator it = liste.begin();
+    bool band = false;
+        //Lista de empresas
+        while (it != liste.end() ){ 
+            cout << it->getNombre() << " y " << nombre << endl;
+            if(it->getNombre().compare(nombre) == 0){
+                band=true;
+                printf("Empresa modificada\n");
+                *it = e;
+            }
+            it++;
+        }
+    if(band == false){
+        printf("Empresa NO modificada\n");
+    }
+    return liste;
+}
+
+
+
+
+
+
+
+
+
+
+
+list<Cliente> modCliente(Cliente c, list<Cliente> listc, string num){
+    list<Cliente>::iterator it = listc.begin();
+    bool band = false;
+        //Lista de clientes
+        while (it != listc.end() ){ 
+            cout << it->getNombre() << " y " << num << endl;
+            if(it->getNumTlf().compare(num) == 0){
+                band=true;
+                printf("Cliente modificado\n");
+                *it = c;
+            }
+            it++;
+        }
+    if(band == false){
+        printf("Empresa NO modificada\n");
+    }
+    return listc;
+}
+
+
+
+
+
+
+
+
+
 //Funcion de registro de empresa
 list<Empresa> registrarEmpresa(list<Empresa> listE){
     list<ProductoServicio> listp;
@@ -845,10 +898,10 @@ list<Cliente> registrarCliente(list<Cliente> listC){
 
 //-------------------------------------------------------------------------------------------------------------------------
 //LLEVAR PRODUCTO
-bool llevarpe(list<Transporte> listT, list<Empresa> liste){
+list<Empresa> llevarpe(list<Transporte> listT, list<Empresa> liste){
     
     list<ProductoServicio> lista;
-    Empresa e = Empresa();
+    Empresa e;
     Transporte t = Transporte();
     // Se obtiene un iterador al inicio de la lista  
     bool band=false; bool band2= false;
@@ -884,12 +937,12 @@ bool llevarpe(list<Transporte> listT, list<Empresa> liste){
 
     if(band == false){
         printf("Transporte no existe. No se pudo realizar el proceso");
-        return false;            
+        return liste;            
     }
 
     
 
-    printf("Nombre de la empresa a llevar el producto");
+    printf("Nombre de la empresa a llevar el producto\n");
     string nombre = "";
     cin >> nombre;
 
@@ -901,7 +954,7 @@ bool llevarpe(list<Transporte> listT, list<Empresa> liste){
     }
     
     it = liste.begin();
-
+    band = false;
     //Buscar si la empresa existe
     if(liste.empty() == false){
         while (it != liste.end()){ 
@@ -913,37 +966,49 @@ bool llevarpe(list<Transporte> listT, list<Empresa> liste){
             it++;
         }
     }else{
-        printf("Empresa no existe. No se pudo realizar el proceso");
-        return false;
+        printf("Empresa no existe. No se pudo realizar el proceso\n");
+        return liste;
     }
 
     if(band == false){
-        printf("La empresa no existe");
-        return false;            
+        printf("La empresa no existe\n");
+        return liste;            
     }
 
 
     printf("Ingersar codigo del producto a enviar\n");
     string cod = "";
-    cin >> cod;          
+    cin >> cod; 
+
+    ProductoServicio p;         
     list<ProductoServicio>::iterator it2 = lista.begin();
     string nombreP = "";
     int cant = 0;
 
+    while (it2 != lista.end()){ 
+        cout << "codigo:" << it2->getCodigo() << endl;
+        it2++;
+    }
+
+    it2 = lista.begin();
+    band = false;
     //Buscar si el producto existe
-    while(band2 == false){
-        // Buscamos el elemento nombre
+    // Buscamos el elemento nombre
+    if(lista.empty() == false){
         while (it2 != lista.end()){ 
-            if(it2->getCodigo().compare(cod) != 0){
+            if(it2->getCodigo().compare(cod) == 0){
                 band2 = true;
                 nombreP = it2->getNombre();
+                p = *it2;
             }
             it2++;
         }
-        
-        if(band2 == false){
-            printf("El producto ya existe en el inventario de la empresa\n");
-        }
+    }else{
+        printf("lista vacia\n");
+    }
+
+    if(band2 == true){
+        printf("El producto ya existe en el inventario de la empresa\n");
     }
     
     if(band2 == false){
@@ -961,19 +1026,40 @@ bool llevarpe(list<Transporte> listT, list<Empresa> liste){
         
         printf("Ingersar la cantidad\n");
         cin >> cant;
-        
+
         ProductoServicio p = ProductoServicio(nombreP,des,prec,cod,cant);
         
-        e.agregarProducto(e,p);
+        e.setListp(e.agregarProducto(e,p));
+
+        //Lista de empresas
+        liste = modEmpresa(e,liste,nombre);
+
+        t.llevarProducto(nombre, nombreP);
+    
+        return liste;
+
     }else{
         printf("Ingersar la cantidad a enviar\n");
         cin >> cant;
-        e.rellenarStock(e,cod,cant);
+        list<ProductoServicio> listp = e.getList();
+        int suma = p.getCantidad() + cant;
+        it2 = listp.begin();
+        while (it2 != listp.end()){ 
+            if(it2->getCodigo().compare(cod) == 0){
+                it2->setCantidad(suma);
+            }
+            it2++;
+        }
+
+        e.setListp(listp);
+        //Lista de empresas
+        liste = modEmpresa(e,liste,nombre);
+
+        t.llevarProducto(nombre, nombreP);
+    
+        return liste;
     }
     
-    t.llevarProducto(nombre, nombreP);
-    
-    return true;
 }
 
 
@@ -994,7 +1080,7 @@ bool llevarpe(list<Transporte> listT, list<Empresa> liste){
 
 //-------------------------------------------------------------------------------------------------------------------------
 //LLEVAR PRODUCTO A LA CASA DE CLIENTE
-bool llevarpc(list<Transporte> listT, list<Cliente> liste){
+list<Empresa> llevarpc(list<Transporte> listT, list<Cliente> liste, list<Empresa> listc){
     
     Cliente c = Cliente();
     list<ProductoServicio> lista;
@@ -1030,7 +1116,7 @@ bool llevarpc(list<Transporte> listT, list<Cliente> liste){
 
     if(band == false){
         printf("Transporte no existe. No se pudo realizar el proceso\n");
-        return false;            
+        return listc;          
     }
 
 
@@ -1050,27 +1136,25 @@ bool llevarpc(list<Transporte> listT, list<Cliente> liste){
     
     it = liste.begin();
 
-    //Buscar si la cliente existe
-    while(band == false){
-        // Buscamos el elemento nombre
-        while (it != liste.end()){ 
-            if(it->getNombre().compare(nombre) == 0){
-                c = *it;
-                band = true;
-                break;
-            }
-            it++;
+    //Buscar si el cliente existe
+    // Buscamos el elemento nombre
+    while (it != liste.end()){ 
+        if(it->getNombre().compare(nombre) == 0){
+            c = *it;
+            band = true;
+            break;
         }
-        
-        if(band == false){
-            printf("Cliente no existe\n");
-            return false;
-        }
+        it++;
     }
     
+    if(band == false){
+        printf("Cliente no existe\n");
+        return listc;
+    }
+
     if(c.getEmpresa().getNombre().compare("vacio")){
         printf("el cliente no se encuentra afiliado a una empresa");
-        return false;
+        return listc;
     }
 
     Empresa e = c.getEmpresa();
@@ -1082,33 +1166,52 @@ bool llevarpc(list<Transporte> listT, list<Cliente> liste){
     cin >> cod;          
     string nombreP = "";
     int cant = 0;
+    band2=false;
+    ProductoServicio p;
 
     //Buscar si el producto existe
-    while(band2 == false){
-        // Buscamos el elemento nombre
-        while (it2 != lista.end()){ 
-            if(it2->getCodigo().compare(cod) != 0){
-                band2 = true;
-                nombreP = it2->getNombre();
-            }
-            it2++;
+    // Buscamos el elemento nombre
+    while (it2 != lista.end()){ 
+        if(it2->getCodigo().compare(cod) == 0){
+            band2 = true;
+            nombreP = it2->getNombre();
+            p = *it2;
         }
-        
-        if(band2 == false){
+        it2++;
+    }
+
+    if(band2 == false){
             printf("El producto ya existe en el inventario de la empresa\n");
-            return false;
-        }
+            return listc;
     }
     
-    if(band2 == false){
+    if(band2 == true){
         printf("Ingersar la cantidad a enviar\n");
         cin >> cant;
-        e.vaciarStock(e,cod,cant);
+
+        int resta = (p.getCantidad() - cant);
+        if(resta <= 0){
+            e.setListp(e.quitarProducto(e,cod));
+            listc = modEmpresa(e,listc,nombre);
+        }else{
+            //Cambiando el valor de la cantidad de 
+            list<ProductoServicio> listp = e.getList();
+            it2 = listp.begin();
+            while (it2 != listp.end()){ 
+                if(it2->getCodigo().compare(cod) == 0){
+                    it2->setCantidad(resta);
+                }
+                it2++;
+            }
+
+            e.setListp(listp);
+            listc = modEmpresa(e,listc,nombre);
+        }
     }
     
     t.llevarProducto(nombre, nombreP);
     
-    return true;
+    return listc;
     
 }
 
@@ -1126,7 +1229,7 @@ bool llevarpc(list<Transporte> listT, list<Cliente> liste){
 
 //-------------------------------------------------------------------------------------------------------------------------
 //Funcion de agregar producto del almacen de la empresa
-bool agregarP(list<Empresa> liste){
+list<Empresa> agregarP(list<Empresa> liste){
     Empresa e = Empresa();
     bool band = false;
     list<Empresa>::iterator it = liste.begin();
@@ -1149,12 +1252,12 @@ bool agregarP(list<Empresa> liste){
         }
     }else{
         printf("Lista vacia. no se puede agregar objeto");
-        return false;
+        return liste;
     }
 
     if(band == false){
         printf("No existe la empresa a buscar\n");
-        return false;
+        return liste;
     }
     
     printf("Ingersar el producto a enviar\n");
@@ -1179,9 +1282,11 @@ bool agregarP(list<Empresa> liste){
     
     ProductoServicio p = ProductoServicio(nombreP,des,prec,cod,cant);
     
-    e.agregarProducto(e,p);
+    e.setListp(e.agregarProducto(e,p));
+
+    liste = modEmpresa(e,liste,nombre);
     
-    return true;
+    return liste;
 }
 
 
@@ -1195,7 +1300,7 @@ bool agregarP(list<Empresa> liste){
 
 //-------------------------------------------------------------------------------------------------------------------------
 //Funcion de Eliminar producto del almacen
-bool quitarP(list<Empresa> liste){
+list<Empresa> quitarP(list<Empresa> liste){
     Empresa e = Empresa();
     char temporal[100];
     char temporal2[100];
@@ -1218,12 +1323,12 @@ bool quitarP(list<Empresa> liste){
         }
     }else{
         printf("Lista vacia. Producto no eliminado\n");
-        return false;
+        return liste;
     }
 
     if(band == false){
         printf("La empresa no existe en la lista\n");
-        return false;
+        return liste;
     }
 
     list<ProductoServicio> lista = e.getList();
@@ -1242,7 +1347,7 @@ bool quitarP(list<Empresa> liste){
     // Buscamos el elemento nombre
     while (it2 != lista.end()){ 
         if(it2->getCodigo().compare(codigo) == 0){
-            e.quitarProducto(e,codigo);
+            e.setListp(e.quitarProducto(e,codigo));
             band = true;
             break;
         }
@@ -1251,11 +1356,13 @@ bool quitarP(list<Empresa> liste){
 
     if(band == false){
         printf("No se encontro el producto a eliminar\n");
-        return false;
+        return liste;
     }
     
+    liste = modEmpresa(e,liste,nombre);
+
     printf("Producto Servicio a eliminado");
-    return true;
+    return liste;
 }
 
 
@@ -1269,7 +1376,7 @@ bool quitarP(list<Empresa> liste){
 
 
 //Funcion que rellena el stock
-bool addstock(list<Empresa> liste){
+list<Empresa> addstock(list<Empresa> liste){
     Empresa e;
     int cant=0;
     bool band = false;
@@ -1289,7 +1396,8 @@ bool addstock(list<Empresa> liste){
     }
     
     if(band == false){
-        return false;
+        printf("La empresa no existe\n");
+        return liste;
     }
 
     list<ProductoServicio> listp = e.getList();   
@@ -1307,25 +1415,39 @@ bool addstock(list<Empresa> liste){
 
     it2 = listp.begin();
     band = false;
+    ProductoServicio p;
     // Buscamos el elemento nombre
     while (it2 != listp.end()){ 
         if(it2->getCodigo().compare(codigo) == 0){
             band = true;
+            p = *it2;
         }
         it2++;
     }
     
     if(band == false){
         printf("No existe el objeto a rellenar el stock\n");
-        return false;
+        return liste;
     }
     
     printf("Ingersar la cantidad del producto\n");
     cin >> cant;
     
-    e.rellenarStock(e,codigo,cant);
+    //Cambiando el valor de la cantidad de 
+    int suma = p.getCantidad() + cant;
+    it2 = listp.begin();
+    while (it2 != listp.end()){ 
+        if(it2->getCodigo().compare(codigo) == 0){
+            it2->setCantidad(suma);
+        }
+        it2++;
+    }
+
+    e.setListp(listp);
+
+    liste = modEmpresa(e,liste,nombre);
     
-    return true;
+    return liste;
 }
 
 
@@ -1348,7 +1470,7 @@ bool addstock(list<Empresa> liste){
 
 
 //Funcion que rellena el stock
-bool deletestock(list<Empresa> liste){
+list<Empresa> deletestock(list<Empresa> liste){
     Empresa e;
     char temporal[100], temporal2[100];
     int cant=0;
@@ -1370,7 +1492,7 @@ bool deletestock(list<Empresa> liste){
     
     if(band == false){
         printf("Produscto no existe. Operacion no realizada\n");
-        return false;
+        return liste;
     }
 
     list<ProductoServicio> listp = e.getList();   
@@ -1388,24 +1510,41 @@ bool deletestock(list<Empresa> liste){
 
     it2 = listp.begin();
     band = false;
+    ProductoServicio p;
     // Buscamos el elemento nombre
     while (it2 != listp.end()){ 
         if(it2->getCodigo().compare(codigo) == 0){
             band = true;
+            p = *it2;
         }
         it2++;
     }
     
     if(band == false){
-        return false;
+        return liste;
     }
     
     printf("Ingersar la cantidad del producto\n");
     cin >> cant;
     
-    e.vaciarStock(e,codigo,cant);
+    int resta = (p.getCantidad() - cant);
+    if(resta <= 0){
+        e.setListp(e.quitarProducto(e,codigo));
+    }else{
+        //Cambiando el valor de la cantidad de 
+        it2 = listp.begin();
+        while (it2 != listp.end()){ 
+            if(it2->getCodigo().compare(codigo) == 0){
+                it2->setCantidad(resta);
+            }
+            it2++;
+        }
+
+        e.setListp(listp);
+    }
     
-    return true;
+    liste = modEmpresa(e,liste,nombre);
+    return liste;
 }
 
 
@@ -1419,7 +1558,7 @@ bool deletestock(list<Empresa> liste){
 
 
 //Funcion para afiliar el cliente
-bool clienteafiliar(list<Cliente> listc, list<Empresa> liste){
+list<Cliente> clienteafiliar(list<Cliente> listc, list<Empresa> liste){
     bool band = false;
 
     printf("Ingersar el numero de telefono del cliente\n");
@@ -1439,12 +1578,12 @@ bool clienteafiliar(list<Cliente> listc, list<Empresa> liste){
         }
     }else{
         printf("Lista vacia. No se puede realizar la afiliacion\n");
-        return false;
+        return listc;
     }
     
     if(band == false){
         printf("El cliente no existe\n");
-        return false;
+        return listc;
     }
 
 
@@ -1469,11 +1608,21 @@ bool clienteafiliar(list<Cliente> listc, list<Empresa> liste){
 
     if(band == false){
         printf("La empresa no existe\n");
-        return false;
+        return listc;
     }
     
     c.afiliarse(c,e);
-    return true;
+    c.setEmpresa(e);
+
+    listc = modCliente(c,listc,num);
+
+    it = listc.begin();
+    while (it != listc.end() ){ 
+        cout << it->getNombre() << ",  " << it->getEmpresa().getNombre() << endl;
+        it++;
+    }
+    cout << "Fin de la funcion" << endl;
+    return listc;
 }
 
 
@@ -1577,11 +1726,7 @@ bool clientecomprar(list<Cliente> listc){
     //Verificar la Solicitud
     Solicitud s = Solicitud();
     bool bandera = false;
-    bandera = s.verificarStatus(e,p.getNombre(),band);
-    if(bandera == false){
-        printf("Solicitud rechazada");
-        return c.comprar(bandera);
-    }
+    e.setListp(s.verificarStatus(e,p.getNombre(),band));
 
     return c.comprar(bandera);
 }
@@ -1593,9 +1738,44 @@ int main(){
     int resp2=9;
     bool band = false;
     list<Cliente> listClientesGeneral;
+
+    string nombre1 = "cesar";
+    string num1 = "04165881300";
+    string resi1 = "Unare";
+    Empresa e1 = Empresa();
+    listClientesGeneral.push_back(Cliente(nombre1,num1,resi1,e1));
+
+    string nombre2 = "noel";
+    string num2 = "04125881300";
+    string resi2 = "Bolivar";
+    Empresa e2 = Empresa();
+    listClientesGeneral.push_back(Cliente(nombre2,num2,resi2,e2));
+
     list<Empresa> listEmpresas;
+
+    string nombre3 = "Pollo";
+    string des3 = "Vende pollo";
+    string rif2 = "J-1234";
+    list<ProductoServicio> listPyS1;
+    listEmpresas.push_back(Empresa(nombre3,des3,rif2, listPyS1));
+
+    string nombre4 = "Mascotas";
+    string des4 = "Vende mascotas";
+    string rif4 = "J-9874";
+    list<ProductoServicio> listPyS2;
+    listEmpresas.push_back(Empresa(nombre4,des4,rif4, listPyS2));
+
     list<Transporte> listTransportes;
+
+    nombre4 = "Mario";
+    string cedula = "24567890";
+    string vehiculo = "Aveo";
+    string placa = "j1234";
+    int capa = 4;
+    listTransportes.push_back(Transporte(nombre4,cedula,vehiculo,placa,capa));
+
     list<ProductoServicio> listPyS;
+    list<Cliente>::iterator it = listClientesGeneral.begin();
 
     printf("BIENVENIDO\n");
 
@@ -1624,19 +1804,19 @@ int main(){
                             break;
                         
                         case 2:
-                            band = addstock(listEmpresas);
+                            listEmpresas = addstock(listEmpresas);
                             break;
                         
                         case 3:
-                            band = deletestock(listEmpresas);
+                            listEmpresas = deletestock(listEmpresas);
                             break;
                         
                         case 4:
-                            band = agregarP(listEmpresas);
+                            listEmpresas = agregarP(listEmpresas);
                             break;
                         
                         case 5:
-                            band = quitarP(listEmpresas);
+                            listEmpresas = quitarP(listEmpresas);
                             break;
 
                         default:
@@ -1656,7 +1836,13 @@ int main(){
                             break;
                         
                         case 2:
-                            band = clienteafiliar(listClientesGeneral, listEmpresas);
+                            listClientesGeneral = clienteafiliar(listClientesGeneral, listEmpresas);
+
+                            while (it != listClientesGeneral.end() ){ 
+                                cout << it->getNombre() << ",  " << it->getEmpresa().getNombre() << endl;
+                                it++;
+                            }
+
                             break;
                         
                         case 3:
@@ -1680,11 +1866,11 @@ int main(){
                             break;
                         
                         case 2:
-                            band = llevarpe(listTransportes, listEmpresas);
+                            listEmpresas = llevarpe(listTransportes, listEmpresas);
                             break;
                         
                         case 3:
-                            band = llevarpc(listTransportes, listClientesGeneral);
+                            listEmpresas = llevarpc(listTransportes, listClientesGeneral, listEmpresas);
                             break;
 
                         default:
