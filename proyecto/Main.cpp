@@ -134,7 +134,7 @@ Empresa::Empresa(string nombr,string des,string riff, list<ProductoServicio> l) 
 
 Empresa::Empresa() //Constructron con parametros
 {
-    nombre="";
+    nombre="vacio";
     descripcion="";
     rif="";
     listp = listp;
@@ -775,7 +775,7 @@ list<Cliente> modCliente(Cliente c, list<Cliente> listc, string num){
     bool band = false;
         //Lista de clientes
         while (it != listc.end() ){ 
-            cout << it->getNombre() << " y " << num << endl;
+            cout << it->getNombre() << " y " << it->getNumTlf() << endl;
             if(it->getNumTlf().compare(num) == 0){
                 band=true;
                 printf("Cliente modificado\n");
@@ -786,6 +786,43 @@ list<Cliente> modCliente(Cliente c, list<Cliente> listc, string num){
     if(band == false){
         printf("Empresa NO modificada\n");
     }
+    return listc;
+}
+
+
+
+
+
+
+
+
+
+
+
+//Modifica la el los datos de la empresa en el cliente
+list<Cliente> modClienteEmpresa(list<Cliente> listc, list<Empresa> liste){
+    list<Cliente>::iterator it = listc.begin();
+    list<Empresa>::iterator it2 = liste.begin();
+    string nombreE = "";
+    bool band = false;
+        //Lista de clientes
+        while (it != listc.end() ){ 
+            cout << it->getNombre() << " y " << it->getNumTlf() << endl;
+            nombreE = it->getEmpresa().getNombre();
+            //Lista de Empresas
+            it2 = liste.begin();
+            if(liste.empty() == false){
+                printf("Entre\n");
+                while(it2 != liste.end()){ 
+                    if(it2->getNombre().compare(nombreE) == 0){
+                        it->setEmpresa(*it2);
+                    }
+                    it2++;
+                }
+                it++;
+            }
+        }
+    printf("Lista de Clientes modificada\n");
     return listc;
 }
 
@@ -1027,7 +1064,7 @@ list<Empresa> llevarpe(list<Transporte> listT, list<Empresa> liste){
         printf("Ingersar la cantidad\n");
         cin >> cant;
 
-        ProductoServicio p = ProductoServicio(nombreP,des,prec,cod,cant);
+        p = ProductoServicio(nombreP,des,prec,cod,cant);
         
         e.setListp(e.agregarProducto(e,p));
 
@@ -1083,7 +1120,6 @@ list<Empresa> llevarpe(list<Transporte> listT, list<Empresa> liste){
 list<Empresa> llevarpc(list<Transporte> listT, list<Cliente> liste, list<Empresa> listc){
     
     Cliente c = Cliente();
-    list<ProductoServicio> lista;
     bool band=false, band2 = false;
    
     printf("ingresar la placa del transporte");
@@ -1130,12 +1166,11 @@ list<Empresa> llevarpc(list<Transporte> listT, list<Cliente> liste, list<Empresa
 
     //Lista de clientes
     while (it != liste.end() ){ 
-        cout << it->getNombre() << endl;
+        cout << "Nombre: " <<it->getNombre() << " Empresa:" << it->getEmpresa().getNombre() << endl;
         it++;
     }
     
     it = liste.begin();
-
     //Buscar si el cliente existe
     // Buscamos el elemento nombre
     while (it != liste.end()){ 
@@ -1152,14 +1187,19 @@ list<Empresa> llevarpc(list<Transporte> listT, list<Cliente> liste, list<Empresa
         return listc;
     }
 
-    if(c.getEmpresa().getNombre().compare("vacio")){
+    if(c.getEmpresa().getNombre().compare("vacio") == 0){
         printf("el cliente no se encuentra afiliado a una empresa");
         return listc;
     }
 
     Empresa e = c.getEmpresa();
-    list<ProductoServicio> lisp = c.getEmpresa().getList();
-    list<ProductoServicio>::iterator it2 = lisp.begin();
+    list<ProductoServicio> listp = c.getEmpresa().getList();
+    list<ProductoServicio>::iterator it2 = listp.begin();
+
+    if(listp.empty() == true){
+        printf("Lista vacia. No se puede realizar la operacion\n");
+        return listc;
+    }
 
     printf("Ingersar codigo del producto a enviar\n");
     string cod = "";
@@ -1171,7 +1211,7 @@ list<Empresa> llevarpc(list<Transporte> listT, list<Cliente> liste, list<Empresa
 
     //Buscar si el producto existe
     // Buscamos el elemento nombre
-    while (it2 != lista.end()){ 
+    while (it2 != listp.end()){ 
         if(it2->getCodigo().compare(cod) == 0){
             band2 = true;
             nombreP = it2->getNombre();
@@ -1181,7 +1221,7 @@ list<Empresa> llevarpc(list<Transporte> listT, list<Cliente> liste, list<Empresa
     }
 
     if(band2 == false){
-            printf("El producto ya existe en el inventario de la empresa\n");
+            printf("El producto NO existe en el inventario de la empresa\n");
             return listc;
     }
     
@@ -1190,20 +1230,21 @@ list<Empresa> llevarpc(list<Transporte> listT, list<Cliente> liste, list<Empresa
         cin >> cant;
 
         int resta = (p.getCantidad() - cant);
+        p.setCantidad(resta);
         if(resta <= 0){
             e.setListp(e.quitarProducto(e,cod));
             listc = modEmpresa(e,listc,nombre);
         }else{
             //Cambiando el valor de la cantidad de 
-            list<ProductoServicio> listp = e.getList();
+            listp = e.getList();
             it2 = listp.begin();
             while (it2 != listp.end()){ 
                 if(it2->getCodigo().compare(cod) == 0){
-                    it2->setCantidad(resta);
+                    *it2 = p;
+                    cout << "Cantidad: " << it2->getCantidad() << endl;
                 }
                 it2++;
             }
-
             e.setListp(listp);
             listc = modEmpresa(e,listc,nombre);
         }
@@ -1302,13 +1343,11 @@ list<Empresa> agregarP(list<Empresa> liste){
 //Funcion de Eliminar producto del almacen
 list<Empresa> quitarP(list<Empresa> liste){
     Empresa e = Empresa();
-    char temporal[100];
-    char temporal2[100];
     bool band = false;
 
     printf("Ingersar el nopmbre de la empresa\n");
-    scanf("%100s", temporal);
-    string nombre = temporal;
+    string nombre = "";
+    cin >> nombre;
 
     list<Empresa>::iterator it = liste.begin();
     // Buscamos el elemento nombre
@@ -1435,10 +1474,11 @@ list<Empresa> addstock(list<Empresa> liste){
     
     //Cambiando el valor de la cantidad de 
     int suma = p.getCantidad() + cant;
+    p.setCantidad(suma);
     it2 = listp.begin();
     while (it2 != listp.end()){ 
         if(it2->getCodigo().compare(codigo) == 0){
-            it2->setCantidad(suma);
+            *it2=p;
         }
         it2++;
     }
@@ -1510,7 +1550,7 @@ list<Empresa> deletestock(list<Empresa> liste){
 
     it2 = listp.begin();
     band = false;
-    ProductoServicio p;
+    ProductoServicio p = ProductoServicio();
     // Buscamos el elemento nombre
     while (it2 != listp.end()){ 
         if(it2->getCodigo().compare(codigo) == 0){
@@ -1526,8 +1566,10 @@ list<Empresa> deletestock(list<Empresa> liste){
     
     printf("Ingersar la cantidad del producto\n");
     cin >> cant;
-    
+
     int resta = (p.getCantidad() - cant);
+    p.setCantidad(resta);
+
     if(resta <= 0){
         e.setListp(e.quitarProducto(e,codigo));
     }else{
@@ -1535,7 +1577,7 @@ list<Empresa> deletestock(list<Empresa> liste){
         it2 = listp.begin();
         while (it2 != listp.end()){ 
             if(it2->getCodigo().compare(codigo) == 0){
-                it2->setCantidad(resta);
+                *it2 = p;
             }
             it2++;
         }
@@ -1737,13 +1779,9 @@ int main(){
     int resp=9;
     int resp2=9;
     bool band = false;
+    list<Cliente> aux;
+    list<Empresa> aux2;
     list<Cliente> listClientesGeneral;
-
-    string nombre1 = "cesar";
-    string num1 = "04165881300";
-    string resi1 = "Unare";
-    Empresa e1 = Empresa();
-    listClientesGeneral.push_back(Cliente(nombre1,num1,resi1,e1));
 
     string nombre2 = "noel";
     string num2 = "04125881300";
@@ -1765,6 +1803,13 @@ int main(){
     list<ProductoServicio> listPyS2;
     listEmpresas.push_back(Empresa(nombre4,des4,rif4, listPyS2));
 
+    string nombre1 = "cesar";
+    string num1 = "04165881300";
+    string resi1 = "Unare";
+    Empresa e1 = Empresa();
+    listClientesGeneral.push_back(Cliente(nombre1,num1,resi1,Empresa(nombre4,des4,rif4, listPyS2)));
+
+
     list<Transporte> listTransportes;
 
     nombre4 = "Mario";
@@ -1775,7 +1820,9 @@ int main(){
     listTransportes.push_back(Transporte(nombre4,cedula,vehiculo,placa,capa));
 
     list<ProductoServicio> listPyS;
-    list<Cliente>::iterator it = listClientesGeneral.begin();
+    list<Empresa>::iterator it = listEmpresas.begin();
+    list<ProductoServicio>:: iterator it2;
+
 
     printf("BIENVENIDO\n");
 
@@ -1804,19 +1851,31 @@ int main(){
                             break;
                         
                         case 2:
-                            listEmpresas = addstock(listEmpresas);
+                            aux2 = addstock(listEmpresas);
+                            listEmpresas = aux2;
+                            aux = modClienteEmpresa(listClientesGeneral,listEmpresas);
+                            listClientesGeneral = aux;
                             break;
                         
                         case 3:
-                            listEmpresas = deletestock(listEmpresas);
+                            aux2 = deletestock(listEmpresas);
+                            listEmpresas = aux2;
+                            aux = modClienteEmpresa(listClientesGeneral,listEmpresas);
+                            listClientesGeneral = aux;
                             break;
                         
                         case 4:
-                            listEmpresas = agregarP(listEmpresas);
+                            aux2 = agregarP(listEmpresas);
+                            listEmpresas = aux2;
+                            aux = modClienteEmpresa(listClientesGeneral,listEmpresas);
+                            listClientesGeneral = aux;
                             break;
                         
                         case 5:
-                            listEmpresas = quitarP(listEmpresas);
+                            aux2 = quitarP(listEmpresas);
+                            listEmpresas = aux2;
+                            aux = modClienteEmpresa(listClientesGeneral,listEmpresas);
+                            listClientesGeneral = aux;
                             break;
 
                         default:
@@ -1836,13 +1895,8 @@ int main(){
                             break;
                         
                         case 2:
-                            listClientesGeneral = clienteafiliar(listClientesGeneral, listEmpresas);
-
-                            while (it != listClientesGeneral.end() ){ 
-                                cout << it->getNombre() << ",  " << it->getEmpresa().getNombre() << endl;
-                                it++;
-                            }
-
+                            aux = clienteafiliar(listClientesGeneral, listEmpresas);
+                            listClientesGeneral = aux;
                             break;
                         
                         case 3:
@@ -1866,11 +1920,34 @@ int main(){
                             break;
                         
                         case 2:
-                            listEmpresas = llevarpe(listTransportes, listEmpresas);
+                            aux2 = llevarpe(listTransportes, listEmpresas);
+                            listEmpresas = aux2;
+                            aux = modClienteEmpresa(listClientesGeneral,listEmpresas);
+                            listClientesGeneral = aux;
+                            
+                            it = listEmpresas.begin();
+                            it2;
+
+                            while (it != listEmpresas.end()){ 
+                                cout << "Nombre: " << it->getNombre() << endl;
+                                if(it->getNombre().compare("Mascotas") == 0){
+                                    listPyS2 = it->getList();
+                                    it2 = listPyS2.begin();
+
+                                    while(it2 != listPyS2.end()){
+                                        cout << "Nombre: " << it2->getNombre() << " Codigo: " << it2->getCodigo() << " Cantidad: " << it2->getCantidad() << endl;
+                                        it2++;
+                                    }
+                                }
+                                it++;
+                            }
                             break;
                         
                         case 3:
-                            listEmpresas = llevarpc(listTransportes, listClientesGeneral, listEmpresas);
+                            aux2 = llevarpc(listTransportes, listClientesGeneral, listEmpresas);
+                            listEmpresas = aux2;
+                            aux = modClienteEmpresa(listClientesGeneral,listEmpresas);
+                            listClientesGeneral = aux;
                             break;
 
                         default:
