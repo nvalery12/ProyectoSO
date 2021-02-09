@@ -439,6 +439,7 @@ public:
     int getDia();
     int getMes();
     int getAno();
+    void asignar();
 };
 
 Fecha::Fecha(int d,int m,int a)
@@ -473,6 +474,14 @@ int Fecha::getMes(){
 int Fecha::getAno(){
     return ano;
 }
+void Fecha::asignar() {
+    cout<<"Ingrese dia: "<<endl;
+    cin>>dia;
+    cout<<"Ingrese mes: "<<endl;
+    cin>>mes;
+    cout<<"Ingrese anio: "<<endl;
+    cin>>ano;
+}
 
 //FIN CLASE FECHA
 
@@ -493,9 +502,9 @@ private:
     ProductoServicio producto;
     MetodoPago metodopago;
     Transporte transporte;
-    Fecha fechaentrega;
     string status;
 public:
+    Fecha fechaentrega;
     Solicitud(ProductoServicio p, MetodoPago pago, Transporte t, string estado);
     Solicitud();
     void setProducto(ProductoServicio p);
@@ -1628,6 +1637,11 @@ list<Cliente> clienteafiliar(list<Cliente> listc, list<Empresa> liste){
         return listc;
     }
 
+    if(c.getEmpresa().getNombre().compare("vacio")!= 0){
+        cout<<"Vliente ya afiliado a una empresa."<<endl;
+        return listc;
+    }
+
 
     printf("Ingersar el nombre de la empresa a afiliarse\n");
     string nombre = "";
@@ -1767,6 +1781,8 @@ bool clientecomprar(list<Cliente> listc){
 
     //Verificar la Solicitud
     Solicitud s = Solicitud();
+    cout<<"Ingrese fecha de entrega"<<endl;
+    s.fechaentrega.asignar();
     bool bandera = false;
     e.setListp(s.verificarStatus(e,p.getNombre(),band));
 
